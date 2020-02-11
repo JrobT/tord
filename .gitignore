@@ -1,0 +1,11 @@
+# dotfiles
+.vscode/
+.env
+
+# python
+__pycache__/
+*.pyc
+env/
+
+# site
+website/website/settings/local_settings.py
