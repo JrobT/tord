@@ -149,3 +149,9 @@ WEB_APPS = [
 
 INSTALLED_APPS += PACKAGE_APPS
 INSTALLED_APPS += WEB_APPS
+
+#################
+##### OTHER #####
+#################
+
+blogsite = 'TruteOrDare'
