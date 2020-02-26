@@ -100,6 +100,9 @@ DATABASES = {
         'OPTIONS': json.loads(
             getenv('DATABASE_OPTIONS', '{}')
         ),
+        'TEST': {
+            'NAME': 'travis_ci_test',
+        }
     }
 }
 
