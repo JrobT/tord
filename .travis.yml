@@ -8,6 +8,6 @@ install:
     - pip install -r website/requirements.txt
 script:
     - cd website/
-    - python manage.py test
-after_success:
-    - coveralls
+    - python -m pytest tests/
+# after_success:
+#     - coveralls
