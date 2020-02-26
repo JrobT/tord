@@ -7,8 +7,9 @@ python:
 before_install:
     - sudo apt-get -qq update
 install: 
-    - pip install -r {BUILD_DIR}/requirements.txt
+    - pip install -r website/requirements.txt
 script:
+    - cd website/
     - tox
 # after_success:
     # - coverage report
