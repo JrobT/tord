@@ -4,12 +4,10 @@ python:
     - 3.8
     - 3.6
     - 2.7
-env:
-    - TRAVIS_BUILD_DIR=website/
 before_install:
     - sudo apt-get -qq update
 install: 
-    - pip install -r requirements.txt
+    - pip install -r {BUILD_DIR}/requirements.txt
 script:
     - tox
 # after_success:
