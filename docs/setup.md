@@ -18,3 +18,9 @@ GRANT ALL PRIVILEGES ON DATABASE truteordare TO truteordare;
 ```bash
 set -o allexport; source ~/code/website/.env; set +o allexport
 ```
+
+## PIP Freeze
+
+```bash
+pip freeze | grep -v "pkg-resources" > requirements.txt
+```

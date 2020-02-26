@@ -1,6 +1,7 @@
-from django.forms import CharField
+from django import forms
 from markdownx.fields import MarkdownxFormField
 
-class CreatePostForm(forms.Form):
-    title = CharField()
+
+class PostForm(forms.Form):
+    title = forms.CharField()
     body = MarkdownxFormField()

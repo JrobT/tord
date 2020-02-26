@@ -1,6 +1,7 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from blog.models import Post
+from blog.forms import PostForm
 
 
 class PostListView(ListView):
@@ -16,7 +17,3 @@ class PostCreateView(CreateView):
     model = Post
     form_class = PostForm
     template_name = "blog/create_post.html"
-    success_url = reverse('post-list')
-
-    def form_invalid(self, form):
-        return JsonResponse({'error': True, 'response': form.errors})

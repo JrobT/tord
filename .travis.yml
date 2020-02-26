@@ -1,15 +1,13 @@
 language:
     - python
 python:
-    - 3.8
     - 3.6
-    - 2.7
 before_install:
     - sudo apt-get -qq update
 install: 
     - pip install -r website/requirements.txt
 script:
     - cd website/
-    - tox
-# after_success:
-    # - coverage report
+    - python manage.py test
+after_success:
+    - coveralls
