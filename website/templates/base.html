@@ -1,9 +1,9 @@
-{% load staticfiles blog_tags %}
+{% load static blog_tags %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>{% block head_title %}{% blogtitle as blogtitle %}{{ blogtitle }}{% endblock head_title %}</title>
+        <title>{% block head_title %}{% blogname as blogname %}{{ blogname }}{% endblock head_title %}</title>
     </head>
     <body>
     <h1>{% block title %}Welcome to my block{% endblock %}</h1>

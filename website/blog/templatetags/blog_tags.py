@@ -1,9 +1,9 @@
-import settings
 from django import template
+from website import settings
 
 register = template.Library()
 
 
 @register.simple_tag
-def blogsite():
-    return settings.blogsite
+def blogname():
+    return settings.blogname

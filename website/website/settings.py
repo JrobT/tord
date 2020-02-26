@@ -7,7 +7,6 @@ from os.path import dirname, abspath, join
 ##### SITE #####
 ################
 
-# PROJECT_DIR = directory with manage.py
 PROJECT_DIR = dirname(dirname(abspath(__file__)))
 
 SITE_ID = 1
@@ -154,4 +153,4 @@ INSTALLED_APPS += WEB_APPS
 ##### OTHER #####
 #################
 
-blogsite = 'TruteOrDare'
+blogname = 'TruteOrDare'
