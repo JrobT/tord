@@ -17,7 +17,6 @@ before_script:
     - python website/manage.py makemigrations
     - python website/manage.py migrate
 script:
-    - cd website/
-    - pytest tests/ --doctest-modules -v --cov truteordare --cov-report term-missing
+    - pytest website/tests/ --doctest-modules -v --cov truteordare --cov-report term-missing
 after_success:
   - coveralls
