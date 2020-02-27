@@ -1,14 +1,13 @@
-language:
-    - python
-python:
-    - 3.6
-services:
-  - postgresql
-before_install:
+language: python
+python: 3.8
+services: postgresql
+cache: pip
+before_install: 
     - sudo apt-get -qq update
-install: 
-    - pip install -r website/requirements.txt
+    - pip install --upgrade pip setuptools six
+install: pip install -r website/requirements.txt
 before_script:
+    - black --check . || true
     - psql -c "CREATE database truteordare;" -U postgres
     - psql -c "CREATE USER truteordare WITH PASSWORD 'truteordare';" -U postgres
     - psql -c "ALTER ROLE truteordare SET client_encoding TO 'utf8';" -U postgres
@@ -19,4 +18,6 @@ before_script:
     - python website/manage.py migrate
 script:
     - cd website/
-    - python -m pytest tests/
+    - pytest tests/ --doctest-modules -v --cov truteordare --cov-report term-missing
+after_success:
+  - coveralls

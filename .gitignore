@@ -8,7 +8,4 @@ __pycache__/
 env/
 
 # testing
-website/website/.tox
-
-# site
-website/website/settings/local_settings.py
+.pytest_cache/
