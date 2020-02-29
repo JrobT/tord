@@ -131,6 +131,7 @@ USE_TZ = True
 ########################
 
 STATIC_URL = '/static/'
+STATIC_ROOT = join(PROJECT_DIR, STATIC_URL[1:])
 
 ################################
 ##### WEBSITE APPLICATIONS #####
