@@ -7,5 +7,5 @@ __pycache__/
 *.pyc
 env/
 
-# site
-website/website/settings/local_settings.py
+# testing
+.pytest_cache/

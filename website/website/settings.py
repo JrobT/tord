@@ -7,7 +7,6 @@ from os.path import dirname, abspath, join
 ##### SITE #####
 ################
 
-# PROJECT_DIR = directory with manage.py
 PROJECT_DIR = dirname(dirname(abspath(__file__)))
 
 SITE_ID = 1
@@ -90,17 +89,15 @@ TEMPLATES = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.{}'.format(
-            getenv('DATABASE_ENGINE')
-        ),
-        'NAME': getenv('DATABASE_NAME'),
-        'USER': getenv('DATABASE_USERNAME'),
-        'PASSWORD': getenv('DATABASE_PASSWORD'),
-        'HOST': getenv('DATABASE_HOST'),
-        'PORT': getenv('DATABASE_PORT'),
+        'ENGINE': getenv('DATABASE_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+        'NAME': getenv('DATABASE_NAME', 'truteordare'),
+        'USER': getenv('DATABASE_USERNAME', 'truteordare'),
+        'PASSWORD': getenv('DATABASE_PASSWORD', 'truteordare'),
+        'HOST': getenv('DATABASE_HOST', '127.0.0.1'),
+        'PORT': getenv('DATABASE_PORT', '5432'),
         'OPTIONS': json.loads(
             getenv('DATABASE_OPTIONS', '{}')
-        ),
+        )
     }
 }
 
@@ -149,3 +146,9 @@ WEB_APPS = [
 
 INSTALLED_APPS += PACKAGE_APPS
 INSTALLED_APPS += WEB_APPS
+
+#################
+##### OTHER #####
+#################
+
+blogname = 'TruteOrDare'

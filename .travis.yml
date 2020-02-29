@@ -1,0 +1,23 @@
+language: python
+python: 3.8
+services: postgresql
+cache: pip
+before_install: 
+    - sudo apt-get -qq update
+    - pip install --upgrade pip setuptools six
+install: pip install -r website/requirements.txt
+before_script:
+    - psql -c "CREATE database truteordare;" -U postgres
+    - psql -c "CREATE USER truteordare WITH PASSWORD 'truteordare';" -U postgres
+    - psql -c "ALTER ROLE truteordare SET client_encoding TO 'utf8';" -U postgres
+    - psql -c "ALTER ROLE truteordare SET default_transaction_isolation TO 'read committed';" -U postgres
+    - psql -c "ALTER ROLE truteordare SET timezone TO 'UTC';" -U postgres
+    - psql -c "GRANT ALL PRIVILEGES ON DATABASE truteordare TO truteordare;" -U postgres
+    - python website/manage.py makemigrations
+    - python website/manage.py migrate
+script:
+    - cd website/
+    - python -m pytest tests/ --doctest-modules -v --cov website --cov-report term-missing
+    - black --check . || true
+after_success:
+  - coveralls
