@@ -11,10 +11,7 @@ class Post(models.Model):
     edited = models.DateField(db_index=True, auto_now=True)
 
     # Blog posts are of a single category
-    category = models.ForeignKey(
-        'blog.Category',
-        on_delete=models.CASCADE
-    )
+    category = models.ForeignKey("blog.Category", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

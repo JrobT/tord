@@ -19,10 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     # Admin urls
-    path('admin/', admin.site.urls),
-
+    path("admin/", admin.site.urls),
     # Package urls
-    path('markdownx/', include('markdownx.urls')),
-
-    path('', include('blog.urls'))
+    path("markdownx/", include("markdownx.urls")),
+    path("", include("blog.urls")),
 ]
