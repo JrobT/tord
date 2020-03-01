@@ -2,6 +2,4 @@
 
 from distutils.core import setup
 
-setup(name='Tord',
-      version='1.0'
-      )
+setup(name="Tord", version="1.0")
