@@ -15,4 +15,4 @@ class PostListView(ListView):
 
 class PostCreateView(CreateView):
     model = Post
-    fields = ["title", "slug", "body", "category"]
+    fields = ["title", "body", "category"]

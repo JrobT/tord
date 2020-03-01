@@ -16,6 +16,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url():
+        return reverse("post-list")
+
 
 class Category(models.Model):
     title = models.CharField(max_length=100, db_index=True)
