@@ -13,6 +13,9 @@ class Post(models.Model):
     # Blog posts are of a single category
     category = models.ForeignKey("blog.Category", on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ["-posted"]
+
     def __str__(self):
         return self.title
 
