@@ -11,7 +11,7 @@ PROJECT_DIR = dirname(dirname(abspath(__file__)))
 
 SITE_ID = 1
 SITENAME = "truteordare"
-SITEURL = "http://localhost:8000/"
+SITEURL = "http://127.0.0.1:8000/"
 
 ROOT_URLCONF = "website.urls"
 WSGI_APPLICATION = "website.wsgi.application"
