@@ -1,5 +1,6 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
+from django.views.generic.detail import DetailView
 from blog.models import Post
 from blog.forms import PostForm
 
@@ -16,3 +17,9 @@ class PostListView(ListView):
 class PostCreateView(CreateView):
     model = Post
     fields = ["title", "body", "category"]
+
+
+class PostDetailView(DetailView):
+    model = Post
+    slug_url_kwarg = "blog_slug"
+    slug_field = "slug"
