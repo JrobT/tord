@@ -21,7 +21,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("post-view", self.slug)
+        return reverse("post-view", args=[self.slug])
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -34,3 +34,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Category, self).save(*args, **kwargs)
