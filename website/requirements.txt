@@ -12,7 +12,7 @@ chardet==3.0.4
 Click==7.0
 coverage==5.0.3
 coveralls==1.11.1
-Django==3.0.3
+Django==3.0.7
 django-haystack==2.8.1
 django-markdownx==3.0.1
 django-profanity-filter==0.2.1
