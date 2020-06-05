@@ -3,10 +3,8 @@ import logging.config
 from os import getenv
 from os.path import dirname, abspath, join
 
-################
-##### SITE #####
-################
 
+# Settings
 PROJECT_DIR = dirname(dirname(abspath(__file__)))
 
 SITE_ID = 1
@@ -20,10 +18,9 @@ ALLOWED_HOSTS = getenv("DJANGO_ALLOWED_HOSTS").split(",")
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 DEBUG = getenv("DJANGO_DEBUG")
 
-###################
-##### LOGGING #####
-###################
+blogname = "TruteOrDare"
 
+# Logging
 LOGLEVEL = getenv("DJANGO_LOGLEVEL")
 
 logging.config.dictConfig(
@@ -42,10 +39,7 @@ logging.config.dictConfig(
     }
 )
 
-##################################
-##### APPLICATION DEFINITION #####
-##################################
-
+# Application
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -75,7 +69,7 @@ TEMPLATES = [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
+                "django.contrib.messages.context_processors.messages"
             ],
         },
     },
@@ -102,40 +96,25 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
-################################
-##### INTERNATIONALIZATION #####
-################################
-
+# Internalisation
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-########################
-##### STATIC FILES #####
-########################
+# Assets
+STATIC_URL = "http://127.0.0.1:8080/"
+STATICFILES_DIRS = ['dist']
 
-STATIC_URL = "/static/"
-STATIC_ROOT = join(PROJECT_DIR, STATIC_URL[1:])
-
-################################
-##### WEBSITE APPLICATIONS #####
-################################
-
+# Web Apps
 PACKAGE_APPS = [
-    "markdownx",
+    "markdownx"
 ]
 
 WEB_APPS = [
-    "blog",
+    "blog"
 ]
 
 INSTALLED_APPS += PACKAGE_APPS
 INSTALLED_APPS += WEB_APPS
-
-#################
-##### OTHER #####
-#################
-
-blogname = "TruteOrDare"

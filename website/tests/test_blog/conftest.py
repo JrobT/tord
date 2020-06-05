@@ -3,6 +3,7 @@ import django
 import pytest
 from os import getenv
 from django.conf import settings
+from django.contrib.auth.models import User
 from blog.models import Category, Post
 
 
@@ -56,3 +57,22 @@ def create_post():
 
     for post in created_posts:
         post.delete()
+
+
+@pytest.fixture
+def create_user():
+
+    created_users = []
+
+    def _make_create_user(username, email, password):
+        user = User.objects.create_superuser(
+            username=username, email=email, password=password
+        )
+        user.save()
+        created_users.append(user)
+        return user
+
+    yield _make_create_user
+
+    for user in created_users:
+        user.delete()

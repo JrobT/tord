@@ -1,11 +1,13 @@
 from django.urls import path
-from blog.views import PostListView, PostCreateView, PostDetailView, PostEditView
+from django.contrib import admin
+from blog import views
 
 
 urlpatterns = [
-    path("create", PostCreateView.as_view(), name="post-create"),
-    path("update/<pk>", PostEditView.as_view(), name="post-edit"),
-    # user access
-    path("", PostListView.as_view(), name="post-list"),
-    path("<slug:blog_slug>/", PostDetailView.as_view(), name="post-view"),
+    path("admin/", admin.site.urls),
+    path("", views.post_list, name="post-list"),
+    path("about", views.AboutView.as_view(), name="about"),
+    path("create", views.PostCreateView.as_view(), name="post-create"),
+    path("update/<pk>", views.PostEditView.as_view(), name="post-edit"),
+    path("<slug:slug>/", views.post_detail, name="post-detail")
 ]
