@@ -18,8 +18,6 @@ ALLOWED_HOSTS = getenv("DJANGO_ALLOWED_HOSTS").split(",")
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 DEBUG = getenv("DJANGO_DEBUG")
 
-LOGIN_URL = SITEURL
-
 blogname = "TruteOrDare"
 
 # Logging
@@ -71,8 +69,7 @@ TEMPLATES = [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-                "blog.context_processors.email_form"
+                "django.contrib.messages.context_processors.messages"
             ],
         },
     },

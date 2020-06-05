@@ -16,11 +16,6 @@ class Post(models.Model):
     # Blog posts are of a single category
     category = models.ForeignKey("blog.Category", on_delete=models.CASCADE)
 
-    objects = models.Manager()
-
-    class Meta:
-        ordering = ["-posted"]
-
     def __str__(self):
         return self.title
 
@@ -40,8 +35,6 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=False)
 
-    objects = models.Manager()
-
     class Meta:
         ordering = ['created']
 
@@ -52,8 +45,6 @@ class Comment(models.Model):
 class Category(models.Model):
     title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
-
-    objects = models.Manager()
 
     class Meta:
         verbose_name_plural = "categories"
@@ -69,8 +60,6 @@ class Category(models.Model):
 class Email(models.Model):
     email = models.EmailField(max_length=100)
     subbed = models.DateTimeField(auto_now_add=True)
-
-    objects = models.Manager()
 
     def __str__(self):
         return self.email

@@ -82,7 +82,7 @@ def post_list(request):
         else:
             tags[title] = 1
 
-    paginator = Paginator(qs, 10)
+    paginator = Paginator(qs.order_by('-posted'), 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -100,6 +100,7 @@ def post_list(request):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ["title", "body", "category"]
+    raise_exception = True
 
 
 class PostEditView(LoginRequiredMixin, UpdateView):
@@ -107,3 +108,4 @@ class PostEditView(LoginRequiredMixin, UpdateView):
     fields = ["title", "tagline", "body", "category"]
     slug_url_kwarg = "blog_slug"
     slug_field = "slug"
+    raise_exception = True
