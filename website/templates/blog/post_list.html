@@ -1,12 +1,37 @@
-{% extends 'base.html' %} 
- 
-{% block content %}
-   <h1>Posts</h1>
-    <ul>
-    {% for post in object_list %}
-        <li>{{ post.title }}</li>
-    {% empty %}
-        <li>No articles yet.</li>
-    {% endfor %}
-    </ul>
-{% endblock %}
+{% extends 'base.html' %}
+{% block title %}Posts - {{ blogname }}{% endblock title %}
+{% block main %}
+<main class="main">
+    <div class="intro">
+        <h1 class="intro__text">Posts</h1>
+    </div>
+
+    {% include "blog/sections/menu.html" %}
+
+    <section class="posts" data-controller="post">
+        {% for post in page_obj %}
+            {% include "blog/snippets/post.html" %}
+        {% empty %}
+            <p>No posts yet.</p>
+        {% endfor %}
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </section>
+</main>
+{% endblock main %}

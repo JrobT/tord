@@ -1,0 +1,45 @@
+{% extends 'base.html' %} 
+{% block title %}{{ post.title|title }} - {{ blogname }}{% endblock title %}
+{% block main %}
+<main class="landing">
+    <section class="landing__content" data-controller="post">
+        <div class="intro">
+            <h1 class="intro__text" data-target="post.post">{{ post.title|title }}</h1>
+            {% if user.is_authenticated %}
+            <div class="post__admin">
+            <h4>Admin:</h4>
+            <span class="post__links-item"><a id="{{ post.pk }}" data-action="post#edit">Edit Post</a></span>
+            {% endif %}
+            </div>
+        </div>
+
+        <div class="hero">
+            <p class="hero__step-title">
+            <span class="post__links-item">{{ post.posted|date:"d F Y" }}</span>
+            {% ifnotequal post.posted post.edited %}
+            <span class="post__links-item">{{ post.edited|date:"d F Y" }}</span>
+            {% endifnotequal %}
+            {% with comments=post.comments.count %}
+            <span class="post__links-item">{{ comments }} Comment{% ifnotequal comments 1 %}s{% endifnotequal %}</span>
+            {% endwith %}
+            </p>
+        </div>
+
+        <p class="lede">
+        {{ object.body }}
+        </p>
+
+        {% for comment in comments %}
+        <div class="comments" style="padding: 10px;">
+          <p class="font-weight-bold">
+            {{ comment.name }}
+            <span class=" text-muted font-weight-normal">
+              {{ comment.created_on }}
+            </span>
+          </p>
+          {{ comment.comment | linebreaks }}
+        </div>
+        {% endfor %}
+    </section>
+</main>
+{% endblock main %}

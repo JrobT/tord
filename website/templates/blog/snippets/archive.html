@@ -1,0 +1,12 @@
+<form method="GET" data-controller="filter">
+    <ul class="menu__nav-list">
+    {% for date, count in dates.items %}
+        <li>
+            <label class="input__lbl_link" for="{{ date }}" data-action="click->filter#archive">{{ date }} ({{ count }})</label>
+            <input class="input__chk_link" type="checkbox" name="{{ date }}" value="{{ date }}">
+        </li>
+    {% empty %}
+        <li>Impossible. Perhaps the Archives Are Incomplete.</li>
+    {% endfor %}
+    </ul>
+</form>

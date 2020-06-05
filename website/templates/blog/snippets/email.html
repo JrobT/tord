@@ -1,0 +1,17 @@
+<form method="POST" class="text_input_form">{% csrf_token %}
+    <input type="text" class="text_input" name="email"
+        {% if form.email.errors %}
+        {% for error in form.email.errors %}
+        style="color: red;"
+        placeholder="{{ error|escape }}"
+        {% endfor %}
+        {% endif %}
+        {% if messages %}
+        {% for message in messages %}
+        style="color: green;"
+        placeholder="{{ message|escape }}"
+        {% endfor %}
+        {% endif %}
+        placeholder="Your email address">
+    <button class="submit_button">Subscribe</button>
+</form>

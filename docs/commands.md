@@ -1,4 +1,4 @@
-# Get started
+# Commands
 
 ## PostgreSQL
 
