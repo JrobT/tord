@@ -1,0 +1,10 @@
+<ul class="menu__nav-list" data-controller="post">
+{% for comment in comments %}
+    <li><span class="bf">{{ comment.name }}</span> on <a class="bf" 
+        id="{{ comment.post.slug }}" data-action="post#detail">
+        {{ comment.post | title | truncatewords:5 }}</a></li>
+    <li>{{ comment.comment | linebreaks | truncatewords:10 }}</li>
+{% empty %}
+    <li>Impossible. Perhaps the Archives Are Incomplete.</li>
+{% endfor %}
+</ul>

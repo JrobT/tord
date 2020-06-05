@@ -1,8 +1,26 @@
 {% extends 'base.html' %} 
- 
-{% block content %}
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-</form>
-{% endblock content %}
+{% block title %}{{ object.title|title }} - {{ blogname }}{% endblock title %}
+{% block main %}
+        <main class="landing">
+            <section class="landing__content">
+                <div class="intro">
+                    <h1 class="intro__text">{{ object.title|title }}</h1>
+                </div>
+
+                <div class="hero">
+                    <p class="hero__step-title">
+                    <span class="post__links-item">{{ post.posted|date:"d F Y" }}</span>
+                    {% ifnotequal post.posted post.edited %}
+                    <span class="post__links-item">{{ post.edited|date:"d F Y" }}</span>
+                    {% endifnotequal %}
+                    <span class="post__links-item">0 Comments</span>
+                    </p>
+                </div>
+
+                <form method="post">{% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Save">
+                </form>
+            </section>
+        </main>
+{% endblock main %}

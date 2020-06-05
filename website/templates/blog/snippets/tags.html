@@ -1,0 +1,7 @@
+<ul class="menu__nav-list">
+{% for tag, count in tags.items %}
+    <li>{{ tag }} ({{ count }})</li>
+{% empty %}
+    <li>Impossible. Perhaps the Archives Are Incomplete.</li>
+{% endfor %}
+</ul>
