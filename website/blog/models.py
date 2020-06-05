@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from markdownx.models import MarkdownxField
+from profanity.validators import validate_is_profane
 
 
 class Post(models.Model):
@@ -29,9 +30,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, validators=[validate_is_profane])
     email = models.EmailField(max_length=100)
-    comment = models.TextField(max_length=500)
+    comment = models.TextField(max_length=500, validators=[validate_is_profane])
     created = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=False)
 
