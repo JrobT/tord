@@ -1,0 +1,27 @@
+- model: blog.comment
+  pk: 1
+  fields:
+    post: 10
+    name: Commenter One
+    email: comment1@comment.com
+    comment: Non voluptatem non eum sit sit. Vel sit est illo tenetur. Modi ratione est quo est impedit quidem. Temporibus voluptatem harum incidunt id veniam quia voluptatem autem. Aut delectus eos est vel modi perferendis. 
+    created: 2020-10-05T20:19:47.919Z
+    active: True
+- model: blog.comment
+  pk: 2
+  fields:
+    post: 10
+    name: Commenter Two
+    email: comment2@comment.com
+    comment: Non voluptatem non eum sit sit. Vel sit est illo tenetur. Modi ratione est quo est impedit quidem. Temporibus voluptatem harum incidunt id veniam quia voluptatem autem. Aut delectus eos est vel modi perferendis. 
+    created: 2020-10-05T20:19:47.919Z
+    active: False
+- model: blog.comment
+  pk: 3
+  fields:
+    post: 9
+    name: Commenter Three
+    email: comment3@comment.com
+    comment: Non voluptatem non eum sit sit. Vel sit est illo tenetur. Modi ratione est quo est impedit quidem. Temporibus voluptatem harum incidunt id veniam quia voluptatem autem. Aut delectus eos est vel modi perferendis. 
+    created: 2020-09-05T20:19:47.919Z
+    active: True

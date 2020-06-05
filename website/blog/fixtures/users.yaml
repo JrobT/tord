@@ -1,0 +1,10 @@
+- model: auth.user
+  pk: 1
+  fields:
+    password: pbkdf2_sha256$180000$u19W5LwEYGyz$QOS3AXfZRx8SE7USHk68gNkUKBI6yIk1c7YvJ1K37qo=
+    is_superuser: True
+    username: jack
+    email: jack@jack.com
+    is_staff: True
+    is_active: True
+    date_joined: 2020-06-05T19:44:14.694Z
