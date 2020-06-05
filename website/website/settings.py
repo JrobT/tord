@@ -109,7 +109,8 @@ STATICFILES_DIRS = ['dist']
 
 # Web Apps
 PACKAGE_APPS = [
-    "markdownx"
+    "markdownx",
+    "profanity"
 ]
 
 WEB_APPS = [
