@@ -17,6 +17,7 @@ before_script:
     - python website/manage.py migrate
 script:
     - cd website/
+    - python manage.py loaddata blog/fixtures/*
     - python -m pytest tests/
 after_success:
   - coveralls
