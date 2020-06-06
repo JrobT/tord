@@ -1,0 +1,25 @@
+- model: blog.email
+  pk: 1
+  fields:
+    email: test1@test.com
+    subbed: 2020-01-15T19:19:47.919Z
+- model: blog.email
+  pk: 2
+  fields:
+    email: test2@test.com
+    subbed: 2020-05-15T19:19:47.919Z
+- model: blog.email
+  pk: 3
+  fields:
+    email: test3@test.com
+    subbed: 2020-10-15T19:19:47.919Z
+- model: blog.email
+  pk: 4
+  fields:
+    email: test4@test.com
+    subbed: 2019-02-15T19:19:47.919Z
+- model: blog.email
+  pk: 5
+  fields:
+    email: test5@test.com
+    subbed: 2019-08-15T19:19:47.919Z

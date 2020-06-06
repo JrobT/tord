@@ -9,15 +9,9 @@ from blog.models import Category, Post
 def test_create_category(create_category, category_title):
     category = create_category(category_title)
     assert (
-        Category.objects.all().count() == 1
-    ), "There should only be the object created in the database"
+        Category.objects.filter(pk=category.pk).count() == 1
+    ), "There should be the object created in the database"
     assert str(category) == category_title, "__str__ should be equal to title"
-
-
-@pytest.mark.django_db
-@pytest.mark.parametrize("category_title", ["test"])
-def test_category_slug(create_category, category_title):
-    category = create_category(category_title)
     assert (
         slugify(category.title) == category.slug
     ), "The object's slug field needs to be set"
@@ -32,17 +26,9 @@ def test_create_post(
     category = create_category(category_title)
     post = create_post(post_title, post_body, category)
     assert (
-        Post.objects.all().count() == 1
-    ), "There should only be the object created in the database"
+        Post.objects.filter(pk=post.pk).count() == 1
+    ), "There should be the object created in the database"
     assert str(post) == post_title, "__str__ should be equal to title"
-
-
-@pytest.mark.django_db
-@pytest.mark.parametrize("category_title", ["test"])
-@pytest.mark.parametrize("post_title,post_body", [("test", "Here is a body title")])
-def test_post_slug(create_category, category_title, create_post, post_title, post_body):
-    category = create_category(category_title)
-    post = create_post(post_title, post_body, category)
     assert slugify(post.title) == post.slug, "The object's slug field needs to be set"
 
 
