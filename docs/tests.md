@@ -1,9 +1,10 @@
 # Tests
 
-## Clear database
+## Reset database
 
 ```bash
 python manage.py flush
+python manage.py loaddata blog/fixtures/*
 ```
 
 ## Run all tests
