@@ -54,7 +54,7 @@ class Tag(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
+        super(Tag, self).save(*args, **kwargs)
 
 
 class Email(models.Model):

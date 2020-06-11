@@ -103,13 +103,13 @@ def post_list(request):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ["title", "body", "category"]
+    fields = ["title", "tagline", "body"]
     raise_exception = True
 
 
 class PostEditView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ["title", "tagline", "body", "category"]
+    fields = ["title", "tagline", "body"]
     slug_url_kwarg = "blog_slug"
     slug_field = "slug"
     raise_exception = True
