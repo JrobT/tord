@@ -49,21 +49,25 @@ def post_list(request):
     if request.method == 'POST':
         email_form = EmailForm(data=request.POST)
         if email_form.is_valid():
+            # Record email address in DB.
             email_form.save()
             messages.success(request, _("Thank you!"))
     else:
         email_form = EmailForm()
 
+    # Show only active Posts if not a staff/superuser.
     qs = Post.objects.filter(active=True)
     if request.user.is_staff or request.user.is_superuser:
         qs = Post.objects.all()
 
+    # URL query ?text to filter Posts by title, tagline, body.
     text_filter = request.GET.get("text")
     if text_filter is not None or "":
         qs = qs.filter(Q(title__icontains=text_filter) |
                         Q(tagline__icontains=text_filter) |
                         Q(body__icontains=text_filter))
 
+    # Set up dictionary for 'Archive' menu.
     dates = [(post.posted, post.count) for post in qs.annotate(count=Count('posted'))]
     archive = dict()
     for date in dates:
@@ -73,6 +77,7 @@ def post_list(request):
         else:
             archive[month_year_combo] = 1
 
+    # Set up dictionary for 'Tags' menu.
     categories = [(post.category, post.count) for post in qs.annotate(count=Count('category'))]
     tags = dict()
     for tag in categories:
@@ -81,6 +86,9 @@ def post_list(request):
             tags[title] = tags[title] + 1
         else:
             tags[title] = 1
+    # Sort tags by their count.
+    tags = {key: value for key, value in sorted(
+        tags.items(), key=lambda item: item[1], reverse=True)}
 
     paginator = Paginator(qs.order_by('-posted'), 10)
     page_number = request.GET.get('page')
