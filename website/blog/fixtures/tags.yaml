@@ -1,0 +1,18 @@
+- model: blog.tag
+  pk: 1
+  fields:
+    title: TestTagOne
+    slug: test-tag-one
+    post: [1,2,3,4]
+- model: blog.tag
+  pk: 2
+  fields:
+    title: TestTagTwo
+    slug: test-tag-two
+    post: [1,2,5,6,7]
+- model: blog.tag
+  pk: 3
+  fields:
+    title: TestTagThree
+    slug: test-tag-three
+    post: [8,9,10,11,12]

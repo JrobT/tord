@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blog.models import Post, Comment, Category, Email
+from blog.models import Post, Comment, Tag, Email
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -17,7 +17,7 @@ class CommentAdmin(admin.ModelAdmin):
         queryset.update(active=True)
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
 
 
@@ -29,5 +29,5 @@ class EmailAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(Category, CategoryAdmin)
+admin.site.register(Tag, TagAdmin)
 admin.site.register(Email, EmailAdmin)

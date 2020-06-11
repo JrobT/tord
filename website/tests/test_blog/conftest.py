@@ -4,7 +4,7 @@ import pytest
 from os import getenv
 from django.conf import settings
 from django.contrib.auth.models import User
-from blog.models import Category, Post
+from blog.models import Tag, Post
 
 
 def pytest_configure():
@@ -26,20 +26,23 @@ def django_db_setup():
 
 
 @pytest.fixture
-def create_category():
+def create_tag():
 
-    created_categories = []
+    created_tags = []
 
-    def _make_create_category(title):
-        category = Category(title=title)
-        category.save()
-        created_categories.append(category)
-        return category
+    def _make_create_tag(title, post=None):
+        if post is None:
+            tag = Tag(title=title)
+        else:
+            tag = Tag(title=title, post=post)
+        tag.save()
+        created_tags.append(tag)
+        return tag
 
-    yield _make_create_category
+    yield _make_create_tag
 
-    for category in created_categories:
-        category.delete()
+    for tag in created_tags:
+        tag.delete()
 
 
 @pytest.fixture
@@ -47,8 +50,8 @@ def create_post():
 
     created_posts = []
 
-    def _make_create_post(title, body, category):
-        post = Post(title=title, body=body, category=category)
+    def _make_create_post(title, tagline, body):
+        post = Post(title=title, tagline=tagline, body=body)
         post.save()
         created_posts.append(post)
         return post

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Count
 from django.core.paginator import Paginator
@@ -67,27 +67,23 @@ def post_list(request):
                         Q(tagline__icontains=text_filter) |
                         Q(body__icontains=text_filter))
 
-    # Set up dictionary for 'Archive' menu.
-    dates = [(post.posted, post.count) for post in qs.annotate(count=Count('posted'))]
+    # Set up dictionary for 'Archive' and 'Tags' menu.
     archive = dict()
-    for date in dates:
-        month_year_combo = "%s %s" % (date[0].strftime("%B"), date[0].year)
+    tags = dict()
+    for post in reversed(qs):
+        month_year_combo = "%s %s" % (post.posted.strftime('%B'), post.posted.year)
         if month_year_combo in archive:
             archive[month_year_combo] = archive[month_year_combo] + 1
         else:
             archive[month_year_combo] = 1
 
-    # Set up dictionary for 'Tags' menu.
-    categories = [(post.category, post.count) for post in qs.annotate(count=Count('category'))]
-    tags = dict()
-    for tag in categories:
-        title = tag[0].title
-        if title in tags:
-            tags[title] = tags[title] + 1
-        else:
-            tags[title] = 1
+        for tag in post.tags.all():
+            if tag.title in tags:
+                tags[tag.title] = tags[tag.title] + 1
+            else:
+                tags[tag.title] = 1
     # Sort tags by their count.
-    tags = {key: value for key, value in sorted(
+    sortedTags = {key: value for key, value in sorted(
         tags.items(), key=lambda item: item[1], reverse=True)}
 
     paginator = Paginator(qs.order_by('-posted'), 10)
@@ -98,8 +94,8 @@ def post_list(request):
         "form": email_form,
         "page_obj": page_obj,
         "comments": Comment.objects.filter(active=True),
-        "dates": archive,
-        "tags": tags
+        "archive": archive,
+        "tags": sortedTags
     }
 
     return render(request, template_name, context)
@@ -107,13 +103,13 @@ def post_list(request):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ["title", "body", "category"]
+    fields = ["title", "tagline", "body"]
     raise_exception = True
 
 
 class PostEditView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ["title", "tagline", "body", "category"]
+    fields = ["title", "tagline", "body"]
     slug_url_kwarg = "blog_slug"
     slug_field = "slug"
     raise_exception = True
