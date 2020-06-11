@@ -14,9 +14,6 @@ class Post(models.Model):
     edited = models.DateField(db_index=True, auto_now=True)
     active = models.BooleanField("Is Active", default=False, help_text="Has this post been published?")
 
-    # Blog posts are of a single category
-    category = models.ForeignKey("blog.Category", on_delete=models.CASCADE)
-
     def __str__(self):
         return self.title
 
@@ -43,19 +40,21 @@ class Comment(models.Model):
         return 'Comment {} by {}'.format(self.comment, self.name)
 
 
-class Category(models.Model):
+class Tag(models.Model):
     title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
 
+    post = models.ManyToManyField(to=Post, related_name="tags")
+
     class Meta:
-        verbose_name_plural = "categories"
+        verbose_name_plural = "tags"
 
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        super(Category, self).save(*args, **kwargs)
+        super(Post, self).save(*args, **kwargs)
 
 
 class Email(models.Model):
