@@ -5,7 +5,7 @@
         {% ifnotequal post.posted post.edited %}
         <span class="post__links-item">{{ post.edited|date:"d F Y" }}</span>
         {% endifnotequal %}
-        {% with comments=post.comments.count %}
+        {% with comments=post.active_comments.count %}
         <span class="post__links-item">{{ comments }} Comment{% ifnotequal comments 1 %}s{% endifnotequal %}</span>
         {% endwith %}
     </nav>

@@ -14,6 +14,9 @@ class Post(models.Model):
     edited = models.DateField(db_index=True, auto_now=True)
     active = models.BooleanField("Is Active", default=False, help_text="Has this post been published?")
 
+    def active_comments(self):
+        return self.comments.filter(active=True)
+
     def __str__(self):
         return self.title
 
