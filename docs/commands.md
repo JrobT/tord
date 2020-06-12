@@ -24,3 +24,9 @@ set -o allexport; source ~/code/website/.env; set +o allexport
 ```bash
 pip freeze | grep -v "pkg-resources" > requirements.txt
 ```
+
+## Fixtures
+
+```bash
+python manage.py loaddata fixtures/*
+```
