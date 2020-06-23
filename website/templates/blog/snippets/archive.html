@@ -2,11 +2,12 @@
     <ul class="menu__nav-list">
     {% for date, count in archive.items %}
         <li>
-            <label class="input__lbl_link" for="{{ date }}" data-action="click->filter#archive">{{ date }} ({{ count }})</label>
-            <input class="input__chk_link" type="checkbox" name="{{ date }}" value="{{ date }}">
+            <input type="submit" id="{{ date }}" class="menu__form-link"
+                data-action="click->filter#test" name="archive"
+                value="{{ date }}"> ({{ count }})
         </li>
     {% empty %}
-        <li>Impossible. Perhaps the Archives Are Incomplete.</li>
+        <li>Impossible. Perhaps the archives Are incomplete.</li>
     {% endfor %}
     </ul>
 </form>

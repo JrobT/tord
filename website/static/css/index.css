@@ -336,20 +336,29 @@ td {
 
 .bf {
     color: #000;
-    font-weight: bold;
-    margin: -.2rem;
-    padding: .2rem;
+    font-weight: bold
 }
 
-.input__chk_link {
-    visibility: hidden;
-    display:none;
-    margin: 0;
-    padding: 0
+.menu__form-link {
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: "rooney-web",
+    serif;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: 500;
+    color: #000
 }
 
-.input__lbl_link:hover {
-    text-decoration: underline
+.menu__form-link:hover {
+    text-decoration: underline;
+    font-weight: bold
+}
+
+.menu_form-link.active {
+    font-weight: bold
 }
 
 .nav {
