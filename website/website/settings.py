@@ -1,6 +1,5 @@
 import json
 import logging.config
-import django_heroku
 from os import getenv
 from os.path import dirname, abspath, join
 
@@ -120,5 +119,3 @@ WEB_APPS = [
 
 INSTALLED_APPS += PACKAGE_APPS
 INSTALLED_APPS += WEB_APPS
-
-django_heroku.settings(locals())
