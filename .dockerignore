@@ -1,0 +1,22 @@
+# docker
+**/Dockerfile
+**/Dockerfile.*
+
+# dotfiles
+**/.vscode/
+**/.dev
+**/.prod
+
+# python
+**/__pycache__/
+**/*.pyc
+**/env/
+
+# webpack
+**/node_modules/
+**/dist/
+
+# testing
+**/.pytest_cache/
+**/htmlcov/
+**/.coverage
