@@ -1,3 +1,4 @@
+{% load webpack_static from webpack_loader %}
 {% load static blog_tags %}
 {% blogname as blogname %}
 <!DOCTYPE html>
@@ -5,9 +6,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="{% static 'main.js' %}"></script>
-        <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+        
         <link rel="stylesheet" href="https://use.typekit.net/ted5yzm.css">
+        <link rel="stylesheet" href="{% static 'bundle/main.css' %}">
+
         <title>{% block title %}{{ blogname }}{% endblock title %}</title>
     </head>
     <body>
@@ -30,11 +32,13 @@
             </p>
             <p>
                 <span class="foot__text">
-                    <a href="https://github.com/JrobT"><img class="foot__icon" src="{% static 'static/img/github.svg' %}" alt="GitHub"></a>
-                    <a href=""><img class="foot__icon" src="{% static 'static/img/twitter.svg' %}" alt="Twitter"></a>
-                    <a href="https://www.linkedin.com/in/jack-trute-4186b9107/"><img class="foot__icon" href="https://www.linkedin.com/in/jack-trute-4186b9107/" src="{% static 'static/img/linkedin.png' %}" alt="LinkedIn"></a>
+                    <a href="https://github.com/JrobT"><img class="foot__icon" src="{% webpack_static 'img/github.svg' %}" alt="GitHub"></a>
+                    <a href=""><img class="foot__icon" src="{% webpack_static 'img/twitter.svg' %}" alt="Twitter"></a>
+                    <a href="https://www.linkedin.com/in/jack-trute-4186b9107/"><img class="foot__icon" href="https://www.linkedin.com/in/jack-trute-4186b9107/" src="{% webpack_static 'img/linkedin.png' %}" alt="LinkedIn"></a>
                 </span>
             </p>
         </footer>
+
+        <script src="{% static 'bundle/main.js' %}"></script>
     </body>
 </html>

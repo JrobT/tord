@@ -1,6 +1,7 @@
 # dotfiles
 .vscode/
-.env
+.dev
+.prod
 
 # python
 __pycache__/
