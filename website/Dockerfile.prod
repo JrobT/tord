@@ -13,9 +13,9 @@ RUN apk update \
     && apk add libffi-dev libxml2 libffi-dev \
     && apk add jpeg-dev zlib-dev libjpeg
 
-COPY ./requirements.txt .
+COPY ./requirements/dev.txt .
 RUN pip install --upgrade pip \
-    && pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+    && pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r dev.txt
 
 COPY . .
 

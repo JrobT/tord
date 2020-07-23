@@ -12,9 +12,9 @@ RUN apk update \
     && apk add jpeg-dev zlib-dev libjpeg
 ENV PATH="/bin/bash:${PATH}"
 
-COPY ./requirements.txt .
+COPY ./requirements/dev.txt .
 RUN pip install --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+    && pip install --no-cache-dir -r dev.txt
 
 COPY . .
 
