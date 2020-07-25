@@ -3,16 +3,15 @@ from datetime import datetime
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Count
 from django.core.paginator import Paginator
-from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, FormMixin
 from blog.models import Post, Comment, Email
-from blog.forms import CommentForm, EmailForm
+from blog.forms import CommentForm
+from blog.mixins import MailingListMixin
 
 
-class AboutView(TemplateView):
+class AboutView(MailingListMixin, TemplateView):
     template_name = 'about.html'
 
 
@@ -43,15 +42,6 @@ def post_detail(request, slug):
 
 def post_list(request):
     template_name = "blog/post_list.html"
-
-    if request.method == 'POST':
-        email_form = EmailForm(data=request.POST)
-        if email_form.is_valid():
-            # Record email address in DB.
-            email_form.save()
-            messages.success(request, _("Thank you!"))
-    else:
-        email_form = EmailForm()
 
     # Show only active posts if not a staff/superuser.
     qs = Post.objects.filter(active=True)

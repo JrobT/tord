@@ -1,44 +1,17 @@
-{% load webpack_static from webpack_loader %}
-{% load static blog_tags %}
-{% blogname as blogname %}
-<!DOCTYPE html>
+<!DOCTYPE html>{% load webpack_static from webpack_loader %}{% load static blog_tags %}{% blogname as blogname %}
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <link rel="stylesheet" href="https://use.typekit.net/ted5yzm.css">
-        <link rel="stylesheet" href="{% static 'bundle/main.css' %}">
-
         <title>{% block title %}{{ blogname }}{% endblock title %}</title>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+            integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'bundle/main.css' %}">
+        <script src="https://kit.fontawesome.com/5b2f6cefa9.js" crossorigin="anonymous"></script>
+        <script src="{% static 'bundle/main.js' %}"></script>
     </head>
     <body>
-        <header class="nav">
-            <span class="bf nav__logo">
-                {{ blogname }}
-            </span>
-            <nav class="nav__links" data-controller="nav">
-                <a class="nav__links-item active" data-target="nav.home" data-action="nav#home">Home</a>
-                <a class="nav__links-item" data-target="nav.about" data-action="nav#about">About</a>
-            </nav>
-        </header>
-
         {% block main %}
         {% endblock main %}
-
-        <footer class="foot">
-            <p class="version">
-                <span>Current version: 1.0 &mdash; released January XX, XXXX</span>
-            </p>
-            <p>
-                <span class="foot__text">
-                    <a href="https://github.com/JrobT"><img class="foot__icon" src="{% webpack_static 'img/github.svg' %}" alt="GitHub"></a>
-                    <a href=""><img class="foot__icon" src="{% webpack_static 'img/twitter.svg' %}" alt="Twitter"></a>
-                    <a href="https://www.linkedin.com/in/jack-trute-4186b9107/"><img class="foot__icon" href="https://www.linkedin.com/in/jack-trute-4186b9107/" src="{% webpack_static 'img/linkedin.png' %}" alt="LinkedIn"></a>
-                </span>
-            </p>
-        </footer>
-
-        <script src="{% static 'bundle/main.js' %}"></script>
     </body>
 </html>
