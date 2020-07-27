@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="splash-container" data-controller="nav">
+    <div class="splash">
+        <h1 class="splash-head">TruteOrDare</h1>
+        <p class="splash-subhead">
+            Software Developer and Data Scientist
+        </p>
+        <div class="pure-u-1">
+            <a data-action="nav#blog" class="button">View Blog</a>
+        </div>
+        <div class="pure-u-1 page-down">
+            <a href="#about"><i class="fas fa-arrow-circle-down"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <div class="content is-center">
+        <h2 class="content-head" id="about">About</h2>
+        <div class="pure-g" data-controller="nav">
+            <div class="l-box pure-u-1-2">
+                <h3 class="content-subhead">
+                    <a data-action="nav#blog">
+                        <i class="fa fa-rocket"></i>Blog
+                    </a>
+                </h3>
+                <p>
+                    I'm a programmer interested in Data Science and Computer Vision, but I'll also write about Football, Cricket, Reading, Dyslexia, and anything really.
+                </p>
+            </div>
+            <div class="l-box pure-u-1-2">
+                <h3 class="content-subhead">
+                    <a data-action="nav#projects">
+                        <i class="fa fa-rocket"></i>Projects
+                    </a>
+                </h3>
+                <p>
+                    I've created this blog as a way of forcing myself to keep track of my personal projects. Take a look for yourself.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="ribbon l-box-lrg pure-g is-center">
+        <div class="pure-u-1">
+            <h2 class="content-head content-head-ribbon">Keep in touch</h2>
+        </div>
+        <div class="pure-u-1 contact-section">
+            <form method="POST">{% csrf_token %}
+                <input type="email" name="email"
+                    {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                    style="color: #fff;"
+                    placeholder="{{ error|escape }}"
+                    {% endfor %}
+                    {% endif %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    style="color: rgba(2, 195, 154, 1);"
+                    placeholder="{{ message|escape }}"
+                    {% endfor %}
+                    {% endif %}
+                    placeholder="Join my Mailing List! Enter your Email"><br/>
+                <button type="submit" class="button">Subscribe</button>
+            </form>
+        </div>
+        <div class="pure-u-1 socials">
+            <a href="https://twitter.com/TruteOrDare" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/JrobT" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/jack-trute-4186b9107/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </div>
+</div>
+{% endblock main %}

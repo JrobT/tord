@@ -7,31 +7,34 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0008_auto_20200605_1639'),
+        ("blog", "0008_auto_20200605_1639"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Tag',
+            name="Tag",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(db_index=True, max_length=100)),
-                ('slug', models.SlugField(max_length=100)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(db_index=True, max_length=100)),
+                ("slug", models.SlugField(max_length=100)),
             ],
-            options={
-                'verbose_name_plural': 'tags',
-            },
+            options={"verbose_name_plural": "tags",},
         ),
-        migrations.RemoveField(
-            model_name='post',
-            name='category',
-        ),
-        migrations.DeleteModel(
-            name='Category',
-        ),
+        migrations.RemoveField(model_name="post", name="category",),
+        migrations.DeleteModel(name="Category",),
         migrations.AddField(
-            model_name='tag',
-            name='post',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blog.Post'),
+            model_name="tag",
+            name="post",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="blog.Post"
+            ),
         ),
     ]

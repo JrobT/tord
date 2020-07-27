@@ -11,7 +11,7 @@ before_script:
     - psql -c "CREATE USER truteordare WITH PASSWORD 'truteordare';" -U postgres
     - psql -c "ALTER ROLE truteordare SET client_encoding TO 'utf8';" -U postgres
     - psql -c "ALTER ROLE truteordare SET default_transaction_isolation TO 'read committed';" -U postgres
-    - psql -c "ALTER ROLE truteordare SET timezone TO 'UTC';" -U postgres
+    - psql -c "ALTER ROLE truteordare SET timezone TO 'Europe/London';" -U postgres
     - psql -c "GRANT ALL PRIVILEGES ON DATABASE truteordare TO truteordare;" -U postgres
     - python website/manage.py makemigrations
     - python website/manage.py migrate

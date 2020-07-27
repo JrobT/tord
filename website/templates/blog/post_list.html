@@ -1,37 +1,103 @@
 {% extends 'base.html' %}
-{% block title %}Posts - {{ blogname }}{% endblock title %}
+{% block title %}Blog &ndash; {{ blogname }}{% endblock title %}
 {% block main %}
-<main class="main">
-    <div class="intro">
-        <h1 class="intro__text">Posts</h1>
-    </div>
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+            <h1 class="brand-title">{{ blogname }}</h1>
+            <h2 class="brand-tagline">Thank you for reading</h2>
 
-    {% include "blog/sections/menu.html" %}
+            <a href="#filter" id="filterLink" class="filter-link">
+                <span></span>
+            </a>
 
-    <section class="posts" data-controller="post">
-        {% for post in page_obj %}
-            {% include "blog/snippets/post.html" %}
-        {% empty %}
-            <p>No posts yet.</p>
-        {% endfor %}
+            <nav id="filter" class="filter">
+                <form method="GET">
+                    <div class="filter-list" data-controller="filter">
+                        <div class="filter-item">
+                            <a class="filter-title" data-action="click->filter#expand">
+                                <span>Text</span>
+                                <div class="filter-icon">&#43;</div>
+                            </a>
+                            <input class="filter-input close" type="text" name="text"
+                                placeholder="Filter by text" disabled>
+                        </div>
+                        {% if archive.items %}
+                        <div class="filter-item">
+                            <a class="filter-title" data-action="click->filter#expand">
+                                <span>Archive</span>
+                                <div class="filter-icon">&#43;</div>
+                            </a>
+                            <select class="filter-input close" name="archive">
+                                <option selected disabled value>Pick date</option>
+                                {% for date, count in archive.items %}
+                                    <option value="{{ date }}">{{ date }} ({{ count }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <a class="filter-title" data-action="click->filter#expand">
+                                <span>Tags</span>
+                                <div class="filter-icon">&#43;</div>
+                            </a>
+                            {% for tag, count in tags.items %}
+                                <button style="background: {{ tag.background }}" class="filter-input close" 
+                                    type="button" data-action="filter#tag">{{ tag.title }} ({{ count }})</button>
+                                <input type="hidden" id="{{ tag.title }}" name="tag"
+                                    value="{{ tag.title }}" disabled>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
 
-        <div class="pagination">
-            <span class="step-links">
-                {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-
-                <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
-            </span>
+                    <div class="pure-u-1" data-controller="nav">
+                        <button class="button" data-action="nav#blog">Clear</button> &#47;
+                        <button class="button" type="submit">Filter</button>
+                    </div>
+                </form>
+            </nav>
         </div>
-    </section>
-</main>
+    </div>
+    <div class="post-content pure-u-1 pure-u-md-3-4">
+        <div>
+            {% if pinned %}
+            <div class="posts" data-controller="post">
+                <h1 class="post-content-subhead">Pinned Post</h1>
+                {% with post=pinned %}
+                {% include "blog/snippets/post.html" %}
+                {% endwith %}
+            </div>
+            {% endif %}
+            <div class="posts" data-controller="post">
+                <h1 class="post-content-subhead">Recent Posts</h1>
+                {% for post in page_obj %}
+                    {% include "blog/snippets/post.html" %}
+                {% empty %}
+                <section class="post">
+                    <header class="post-header">
+                        <h2 class="post-title">No posts yet.</h2>
+                    </header>
+                </section>
+                {% endfor %}
+            </div>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock main %}

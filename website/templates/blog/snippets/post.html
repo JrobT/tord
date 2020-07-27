@@ -1,13 +1,22 @@
-<div class="post">
-    <h2><a class="bf" id="{{ post.slug }}" data-action="post#detail">{{ post.title|title }}</a></h2>
-    <nav class="post__links">
-        <span class="post__links-item">{{ post.posted|date:"d F Y" }}</span>
+<section class="post">
+    <header class="post-header">
+        {% comment %} <img width="48" height="48" class="post-avatar" src=""> {% endcomment %}
+        <h2 class="post-title" id="{{ post.slug }}" data-action="post#detail">{{ post.title|title }}</h2>
+        <p class="post-meta">
+            {{ post.posted|date:"d F Y" }}
+        </p>
         {% ifnotequal post.posted post.edited %}
-        <span class="post__links-item">{{ post.edited|date:"d F Y" }}</span>
+        <p class="post-meta">
+            {{ post.edited|date:"d F Y" }}
+        </p>
         {% endifnotequal %}
-        {% with comments=post.active_comments.count %}
-        <span class="post__links-item">{{ comments }} Comment{% ifnotequal comments 1 %}s{% endifnotequal %}</span>
-        {% endwith %}
-    </nav>
-    <p>{{ post.tagline|truncatewords:100 }}</p>
-</div>
+        <p class="post-meta">
+            {% for tag in post.tags.all %}
+            <a class="post-category" style="background: {{ tag.background }}" href="{{ tag.slug }}">{{ tag.title|title }}</a>
+            {% endfor %}
+        </p>
+    </header>
+    <div class="post-description">
+        <p>{{ post.tagline|truncatewords:100 }}</p>
+    </div>
+</section>

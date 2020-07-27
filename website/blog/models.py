@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.template.defaultfilters import slugify
 from markdownx.models import MarkdownxField
 from profanity.validators import validate_is_profane
+from .validators import validate_is_color_string
 
 
 class Post(models.Model):
@@ -12,8 +13,17 @@ class Post(models.Model):
     body = MarkdownxField()
     posted = models.DateField(db_index=True, auto_now_add=True)
     edited = models.DateField(db_index=True, auto_now=True)
-    active = models.BooleanField("Is Active", default=False, help_text="Has this post been published?")
+    active = models.BooleanField(
+        "Is Active", default=False, help_text="Has this post been published?"
+    )
+    pinned = models.BooleanField(
+        "Is Pinned", default=False, help_text="Has this post been pinned?"
+    )
 
+    class Meta:
+        ordering = ["-posted__year", "-posted__month"]
+
+    @property
     def active_comments(self):
         return self.comments.filter(active=True)
 
@@ -25,11 +35,19 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+        if self.pinned:
+            try:
+                temp = Post.objects.get(pinned=True)
+                if self != temp:
+                    temp.pinned = False
+                    temp.save()
+            except Post.DoesNotExist:
+                pass
         super(Post, self).save(*args, **kwargs)
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     name = models.CharField(max_length=50, validators=[validate_is_profane])
     email = models.EmailField(max_length=100)
     comment = models.TextField(max_length=500, validators=[validate_is_profane])
@@ -37,15 +55,18 @@ class Comment(models.Model):
     active = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['created']
+        ordering = ["created"]
 
     def __str__(self):
-        return 'Comment {} by {}'.format(self.comment, self.name)
+        return "Comment {} by {}".format(self.comment, self.name)
 
 
 class Tag(models.Model):
     title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
+    background = models.CharField(
+        max_length=7, db_index=True, validators=[validate_is_color_string]
+    )
 
     post = models.ManyToManyField(to=Post, related_name="tags")
 

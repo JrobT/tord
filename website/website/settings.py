@@ -94,8 +94,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internalisation
-LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
+LANGUAGE_CODE = "en"
+TIME_ZONE = "Europe/London"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -109,9 +109,9 @@ STATICFILES_DIRS = (
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'bundle/',
+        'BUNDLE_DIR_NAME': 'dist/',
         'STATS_FILE': join(PROJECT_DIR,
-            'static/bundle/webpack-stats.json'),
+                           'static/dist/webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
         'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
@@ -127,6 +127,7 @@ PACKAGE_APPS = [
 ]
 
 WEB_APPS = [
+    "landing",
     "blog"
 ]
 

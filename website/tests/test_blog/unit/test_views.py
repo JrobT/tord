@@ -1,12 +1,5 @@
 import pytest
-from django.apps import apps
 from django.urls import reverse
-from blog.apps import BlogConfig
-
-
-def test_blog_app():
-    assert BlogConfig.name == "blog"
-    assert apps.get_app_config("blog").name, "blog"
 
 
 @pytest.mark.django_db

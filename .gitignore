@@ -10,7 +10,6 @@ env/
 
 # webpack
 node_modules/
-dist/
 
 # testing
 .pytest_cache/

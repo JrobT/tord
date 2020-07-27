@@ -1,8 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
-    # Package urls
+    path("admin/", admin.site.urls),
+
     path("markdownx/", include("markdownx.urls")),
-    path("", include("blog.urls")),
+    
+    path("", include("landing.urls")),
+    path("blog/", include("blog.urls"))
 ]

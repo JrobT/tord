@@ -7,27 +7,32 @@ import profanity.validators
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0006_email_subbed'),
+        ("blog", "0006_email_subbed"),
     ]
 
     operations = [
-        migrations.AlterModelOptions(
-            name='post',
-            options={},
+        migrations.AlterModelOptions(name="post", options={},),
+        migrations.AlterField(
+            model_name="comment",
+            name="comment",
+            field=models.TextField(
+                max_length=500, validators=[profanity.validators.validate_is_profane]
+            ),
         ),
         migrations.AlterField(
-            model_name='comment',
-            name='comment',
-            field=models.TextField(max_length=500, validators=[profanity.validators.validate_is_profane]),
+            model_name="comment",
+            name="name",
+            field=models.CharField(
+                max_length=50, validators=[profanity.validators.validate_is_profane]
+            ),
         ),
         migrations.AlterField(
-            model_name='comment',
-            name='name',
-            field=models.CharField(max_length=50, validators=[profanity.validators.validate_is_profane]),
-        ),
-        migrations.AlterField(
-            model_name='post',
-            name='title',
-            field=models.CharField(max_length=100, unique=True, validators=[profanity.validators.validate_is_profane]),
+            model_name="post",
+            name="title",
+            field=models.CharField(
+                max_length=100,
+                unique=True,
+                validators=[profanity.validators.validate_is_profane],
+            ),
         ),
     ]

@@ -6,18 +6,26 @@ const BundleTracker = require('webpack-bundle-tracker')
 module.exports = {
     mode: 'development',
     entry: './static/js/index.js',
+    devtool: 'inline-source-map',
+    devServer: {
+        contentBase: './static/dist',
+        compress: true
+    },
     output: {
-        path: path.resolve('./static/bundle/'),
+        path: path.resolve(__dirname, 'static/dist'),
         filename: "[name].js"
     },
     plugins: [
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            path: path.resolve(__dirname, 'static/dist'),
+            filename: "[name].css",
+        }),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
         }),
         new BundleTracker({
-            filename: './static/bundle/webpack-stats.json'
+            filename: './static/dist/webpack-stats.json'
         })
     ],
     module: {
