@@ -17,7 +17,7 @@ def post_detail(request, slug):
     comments = post.comments.filter(active=True)
     new_comment = None
 
-    if request.method == 'POST':
+    if request.method == "POST":
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
@@ -30,7 +30,7 @@ def post_detail(request, slug):
         "post": post,
         "comments": comments,
         "new_comment": new_comment,
-        "comment_form": comment_form
+        "comment_form": comment_form,
     }
 
     return render(request, template_name, context)
@@ -56,7 +56,7 @@ class PostListView(MailingListMixin, TemplateView):
         archive = dict()
         tags = dict()
         for post in qs:
-            month_year_combo = "%s %s" % (post.posted.strftime('%B'), post.posted.year)
+            month_year_combo = "%s %s" % (post.posted.strftime("%B"), post.posted.year)
             if month_year_combo in archive:
                 archive[month_year_combo] = archive[month_year_combo] + 1
             else:
@@ -67,8 +67,12 @@ class PostListView(MailingListMixin, TemplateView):
                     tags[tag.title] = tags[tag.title] + 1
                 else:
                     tags[tag.title] = 1
-        sortedTags = {key: value for key, value in sorted(
-            tags.items(), key=lambda item: item[1], reverse=True)}
+        sortedTags = {
+            key: value
+            for key, value in sorted(
+                tags.items(), key=lambda item: item[1], reverse=True
+            )
+        }
 
         archive_filter = request.GET.get("archive")
         if archive_filter is not None or "":
@@ -81,12 +85,14 @@ class PostListView(MailingListMixin, TemplateView):
 
         text_filter = request.GET.get("text")
         if text_filter is not None or "":
-            qs = qs.filter(Q(title__icontains=text_filter) |
-                        Q(tagline__icontains=text_filter) |
-                        Q(body__icontains=text_filter))
+            qs = qs.filter(
+                Q(title__icontains=text_filter)
+                | Q(tagline__icontains=text_filter)
+                | Q(body__icontains=text_filter)
+            )
 
         paginator = Paginator(qs, 10)
-        page_number = request.GET.get('page')
+        page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
 
         context = {
@@ -94,7 +100,7 @@ class PostListView(MailingListMixin, TemplateView):
             "page_obj": page_obj,
             "comments": Comment.objects.filter(active=True),
             "archive": archive,
-            "tags": sortedTags
+            "tags": sortedTags,
         }
 
         return self.render_to_response(context)

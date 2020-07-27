@@ -3,11 +3,11 @@ from django.utils.translation import ugettext_lazy as _
 from blog.forms import EmailForm
 
 
-class MailingListMixin():
+class MailingListMixin:
     """Process POST as a request to be added to the mailing list."""
 
     def post(self, request, *args, **kwargs):
-        if request.method == 'POST':
+        if request.method == "POST":
             email_form = EmailForm(data=request.POST)
             if email_form.is_valid():
                 email_form.save()

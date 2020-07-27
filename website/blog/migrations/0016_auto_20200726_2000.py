@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0015_post_pinned'),
+        ("blog", "0015_post_pinned"),
     ]
 
     operations = [
-        migrations.AlterModelOptions(
-            name='post',
-            options={'ordering': ['-posted']},
-        ),
+        migrations.AlterModelOptions(name="post", options={"ordering": ["-posted"]},),
     ]

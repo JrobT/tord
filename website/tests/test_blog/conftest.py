@@ -4,7 +4,7 @@ import pytest
 from os import getenv
 from django.conf import settings
 from django.contrib.auth.models import User
-from blog.models import Tag, Post
+from blog.models import Tag, Post, Comment
 
 
 def pytest_configure():
@@ -30,11 +30,11 @@ def create_tag():
 
     created_tags = []
 
-    def _make_create_tag(title, post=None):
+    def _make_create_tag(title, background, post=None):
         if post is None:
-            tag = Tag(title=title)
+            tag = Tag(title=title, background=background)
         else:
-            tag = Tag(title=title, post=post)
+            tag = Tag(title=title, background=background, post=post)
         tag.save()
         created_tags.append(tag)
         return tag
@@ -60,6 +60,26 @@ def create_post():
 
     for post in created_posts:
         post.delete()
+
+
+@pytest.fixture
+def create_comment():
+
+    created_comments = []
+
+    def _make_create_comment(name, email, comment, post=None):
+        if post is None:
+            comment = Comment(name=name, email=email, comment=comment)
+        else:
+            comment = Comment(name=name, email=email, comment=comment, post=post)
+        comment.save()
+        created_comments.append(comment)
+        return comment
+
+    yield _make_create_comment
+
+    for comment in created_comments:
+        comment.delete()
 
 
 @pytest.fixture

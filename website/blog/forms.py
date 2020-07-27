@@ -17,7 +17,7 @@ class EmailForm(forms.ModelForm):
         fields = ("email",)
 
     def clean_email(self):
-        email = self.cleaned_data['email']
+        email = self.cleaned_data["email"]
         # Check for duplicate
         if Email.objects.filter(email__iexact=email):
             raise ValidationError(_("You're already subscribed."))

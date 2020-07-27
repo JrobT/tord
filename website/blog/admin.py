@@ -11,7 +11,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ("name", "comment", "post", "created", "active")
     list_filter = ("created", "active")
     search_fields = ("name", "email", "comment")
-    actions = ['approve_comments']
+    actions = ["approve_comments"]
 
     def approve_comments(self, request, queryset):
         queryset.update(active=True)
@@ -22,9 +22,15 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class EmailAdmin(admin.ModelAdmin):
-    list_display = ("email", "subbed",)
+    list_display = (
+        "email",
+        "subbed",
+    )
     list_filter = ("subbed",)
-    search_fields = ("email", "subbed",)
+    search_fields = (
+        "email",
+        "subbed",
+    )
 
 
 admin.site.register(Post, PostAdmin)

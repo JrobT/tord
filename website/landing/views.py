@@ -3,4 +3,4 @@ from blog.mixins import MailingListMixin
 
 
 class AboutView(MailingListMixin, TemplateView):
-    template_name = 'landing/about.html'
+    template_name = "landing/about.html"
