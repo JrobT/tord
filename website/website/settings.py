@@ -127,6 +127,7 @@ PACKAGE_APPS = [
 ]
 
 WEB_APPS = [
+    "landing",
     "blog"
 ]
 

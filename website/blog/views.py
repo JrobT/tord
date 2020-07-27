@@ -11,10 +11,6 @@ from blog.forms import CommentForm
 from blog.mixins import MailingListMixin
 
 
-class AboutView(MailingListMixin, TemplateView):
-    template_name = 'about.html'
-
-
 def post_detail(request, slug):
     template_name = "blog/post_detail.html"
     post = get_object_or_404(Post, slug=slug)
@@ -40,64 +36,68 @@ def post_detail(request, slug):
     return render(request, template_name, context)
 
 
-def post_list(request):
+class PostListView(MailingListMixin, TemplateView):
     template_name = "blog/post_list.html"
 
-    # Show only active posts if not a staff/superuser.
-    qs = Post.objects.filter(active=True)
-    if request.user.is_staff or request.user.is_superuser:
-        qs = Post.objects.all()
+    def get(self, request, *args, **kwargs):
+        # Show only active posts if not a staff/superuser.
+        qs = Post.objects.filter(active=True)
+        if request.user.is_staff or request.user.is_superuser:
+            qs = Post.objects.all()
 
-    # Set up dictionary for 'Archive' and 'Tags' menu.
-    archive = dict()
-    tags = dict()
-    for post in reversed(qs):
-        month_year_combo = "%s %s" % (post.posted.strftime('%B'), post.posted.year)
-        if month_year_combo in archive:
-            archive[month_year_combo] = archive[month_year_combo] + 1
-        else:
-            archive[month_year_combo] = 1
+        # Get pinned Post and remove it from QuerySet.
+        try:
+            pinned = qs.get(pinned=True)
+            qs = qs.exclude(pinned=True)
+        except Exception:
+            pinned = None
 
-        for tag in post.tags.all():
-            if tag.title in tags:
-                tags[tag.title] = tags[tag.title] + 1
+        # Set up dictionary for 'Archive' and 'Tags' menu.
+        archive = dict()
+        tags = dict()
+        for post in qs:
+            month_year_combo = "%s %s" % (post.posted.strftime('%B'), post.posted.year)
+            if month_year_combo in archive:
+                archive[month_year_combo] = archive[month_year_combo] + 1
             else:
-                tags[tag.title] = 1
-    # Sort tags by their count.
-    sortedTags = {key: value for key, value in sorted(
-        tags.items(), key=lambda item: item[1], reverse=True)}
+                archive[month_year_combo] = 1
 
-    # Filter posts by tags.
-    # tag_filter = request.GET.get("tags")
-    # if tag_filter is not None or "":
-    #     qs = qs.filter(tag__icontains=tag_filter)
+            for tag in post.tags.all():
+                if tag.title in tags:
+                    tags[tag.title] = tags[tag.title] + 1
+                else:
+                    tags[tag.title] = 1
+        sortedTags = {key: value for key, value in sorted(
+            tags.items(), key=lambda item: item[1], reverse=True)}
 
-    # Filter posts by posted date.
-    archive_filter = request.GET.get("archive")
-    if archive_filter is not None or "":
-        dt = datetime.strptime(archive_filter, "%B %Y")
-        qs = qs.filter(Q(posted__month=dt.month) & Q(posted__year=dt.year))
+        archive_filter = request.GET.get("archive")
+        if archive_filter is not None or "":
+            dt = datetime.strptime(archive_filter, "%B %Y")
+            qs = qs.filter(Q(posted__month=dt.month) & Q(posted__year=dt.year))
 
-    # Filter Posts by title, tagline, body.
-    text_filter = request.GET.get("text")
-    if text_filter is not None or "":
-        qs = qs.filter(Q(title__icontains=text_filter) |
-                       Q(tagline__icontains=text_filter) |
-                       Q(body__icontains=text_filter))
+        tag_filter = request.GET.get("tag")
+        if tag_filter is not None or "":
+            qs = qs.filter(tags__title__icontains=tag_filter)
 
-    paginator = Paginator(qs.order_by('-posted'), 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+        text_filter = request.GET.get("text")
+        if text_filter is not None or "":
+            qs = qs.filter(Q(title__icontains=text_filter) |
+                        Q(tagline__icontains=text_filter) |
+                        Q(body__icontains=text_filter))
 
-    context = {
-        "form": email_form,
-        "page_obj": page_obj,
-        "comments": Comment.objects.filter(active=True),
-        "archive": archive,
-        "tags": sortedTags
-    }
+        paginator = Paginator(qs, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
 
-    return render(request, template_name, context)
+        context = {
+            "pinned": pinned,
+            "page_obj": page_obj,
+            "comments": Comment.objects.filter(active=True),
+            "archive": archive,
+            "tags": sortedTags
+        }
+
+        return self.render_to_response(context)
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):

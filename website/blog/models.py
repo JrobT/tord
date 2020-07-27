@@ -13,6 +13,10 @@ class Post(models.Model):
     posted = models.DateField(db_index=True, auto_now_add=True)
     edited = models.DateField(db_index=True, auto_now=True)
     active = models.BooleanField("Is Active", default=False, help_text="Has this post been published?")
+    pinned = models.BooleanField("Is Pinned", default=False, help_text="Has this post been pinned?")
+
+    class Meta:
+        ordering = ['-posted__year', '-posted__month']
 
     def active_comments(self):
         return self.comments.filter(active=True)
@@ -25,6 +29,14 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
+        if self.pinned:
+            try:
+                temp = Post.objects.get(pinned=True)
+                if self != temp:
+                    temp.pinned = False
+                    temp.save()
+            except Post.DoesNotExist:
+                pass
         super(Post, self).save(*args, **kwargs)
 
 
@@ -46,6 +58,7 @@ class Comment(models.Model):
 class Tag(models.Model):
     title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
+    background = models.CharField(max_length=7, db_index=True)
 
     post = models.ManyToManyField(to=Post, related_name="tags")
 
