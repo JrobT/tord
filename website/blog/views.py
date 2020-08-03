@@ -98,6 +98,7 @@ class PostListView(MailingListMixin, TemplateView):
         context = {
             "pinned": pinned,
             "page_obj": page_obj,
+            "num_pages": range(1, page_obj.paginator.num_pages+1),
             "comments": Comment.objects.filter(active=True),
             "archive": archive,
             "tags": sortedTags,

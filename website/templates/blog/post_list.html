@@ -2,63 +2,58 @@
 {% block title %}Blog &ndash; {{ blogname }}{% endblock title %}
 {% block main %}
 <div id="layout" class="pure-g">
+    <button class="button" id="filter-open" data-action="filter#menu">&#9776;</button>
+
     <div class="sidebar pure-u-1 pure-u-md-1-4">
-        <div class="header">
-            <h1 class="brand-title">{{ blogname }}</h1>
-            <h2 class="brand-tagline">Thank you for reading</h2>
-
-            <a href="#filter" id="filterLink" class="filter-link">
-                <span></span>
-            </a>
-
-            <nav id="filter" class="filter">
+        <div class="filter" data-controller="filter">
+            <div class="filter-list">
+                <button class="button" style="display: none;" id="filter-close" data-action="filter#menu">Close &times;</button>
                 <form method="GET">
-                    <div class="filter-list" data-controller="filter">
-                        <div class="filter-item">
-                            <a class="filter-title" data-action="click->filter#expand">
-                                <span>Text</span>
-                                <div class="filter-icon">&#43;</div>
-                            </a>
-                            <input class="filter-input close" type="text" name="text"
-                                placeholder="Filter by text" disabled>
-                        </div>
-                        {% if archive.items %}
-                        <div class="filter-item">
-                            <a class="filter-title" data-action="click->filter#expand">
-                                <span>Archive</span>
-                                <div class="filter-icon">&#43;</div>
-                            </a>
-                            <select class="filter-input close" name="archive">
-                                <option selected disabled value>Pick date</option>
-                                {% for date, count in archive.items %}
-                                    <option value="{{ date }}">{{ date }} ({{ count }})</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="filter-item">
-                            <a class="filter-title" data-action="click->filter#expand">
-                                <span>Tags</span>
-                                <div class="filter-icon">&#43;</div>
-                            </a>
-                            {% for tag, count in tags.items %}
-                                <button style="background: {{ tag.background }}" class="filter-input close" 
-                                    type="button" data-action="filter#tag">{{ tag.title }} ({{ count }})</button>
-                                <input type="hidden" id="{{ tag.title }}" name="tag"
-                                    value="{{ tag.title }}" disabled>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
+                    <div class="filter-item">
+                        <a class="filter-title" data-action="filter#expand">
+                            Text
+                            <div class="filter-icon">&#43;</div>
+                        </a>
+                        <input class="filter-input" type="text" name="text"
+                            placeholder="Filter by text" disabled>
                     </div>
+                    {% if archive.items %}
+                    <div class="filter-item">
+                        <a class="filter-title" data-action="filter#expand">
+                            Archive
+                            <div class="filter-icon">&#43;</div>
+                        </a>
+                        <select class="filter-input" name="archive">
+                            <option selected disabled value>Pick date</option>
+                            {% for date, count in archive.items %}
+                                <option value="{{ date }}">{{ date }} ({{ count }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <a class="filter-title" data-action="filter#expand">
+                            Tags
+                            <div class="filter-icon">&#43;</div>
+                        </a>
+                        {% for tag, count in tags.items %}
+                            <button style="background: {{ tag.background }}" class="filter-input" 
+                                type="button" data-action="filter#tag">{{ tag.title }} ({{ count }})</button>
+                            <input type="hidden" id="{{ tag.title }}" name="tag"
+                                value="{{ tag.title }}" disabled>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
 
                     <div class="pure-u-1" data-controller="nav">
                         <button class="button" data-action="nav#blog">Clear</button> &#47;
                         <button class="button" type="submit">Filter</button>
                     </div>
                 </form>
-            </nav>
+            </div>
         </div>
     </div>
-    <div class="post-content pure-u-1 pure-u-md-3-4">
+
+    <div class="post-content pure-u-1">
         <div>
             {% if pinned %}
             <div class="posts" data-controller="post">
@@ -80,23 +75,11 @@
                 </section>
                 {% endfor %}
             </div>
-            <div class="pagination">
-                <span class="step-links">
-                    {% if page_obj.has_previous %}
-                        <a href="?page=1">&laquo; first</a>
-                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                    {% endif %}
-
-                    <span class="current">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                    </span>
-
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">next</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                    {% endif %}
-                </span>
-            </div>
+            <ul class="pagination" data-controller="pagination">
+                {% for page_num in num_pages %}
+                <li><a data-action="pagination#page" id="page-{{ page_num }}">{{ page_num }}</a></li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>

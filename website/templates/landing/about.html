@@ -2,12 +2,18 @@
 {% block main %}
 <div class="splash-container" data-controller="nav">
     <div class="splash">
-        <h1 class="splash-head">TruteOrDare</h1>
+        <h1 class="splash-head">
+            <span class="splash-head-text">TruteOrDare</span>
+            <span class="splash-head-gradient"></span>
+            <span class="splash-head-dodge"></span>
+        </h1>
         <p class="splash-subhead">
             Software Developer and Data Scientist
         </p>
         <div class="pure-u-1">
-            <a data-action="nav#blog" class="button">View Blog</a>
+            <a data-action="nav#blog" class="splash-button">
+                View Blog
+            </a>
         </div>
         <div class="pure-u-1 page-down">
             <a href="#about"><i class="fas fa-arrow-circle-down"></i></a>
@@ -22,7 +28,7 @@
             <div class="l-box pure-u-1-2">
                 <h3 class="content-subhead">
                     <a data-action="nav#blog">
-                        <i class="fa fa-rocket"></i>Blog
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Blog
                     </a>
                 </h3>
                 <p>
@@ -32,7 +38,7 @@
             <div class="l-box pure-u-1-2">
                 <h3 class="content-subhead">
                     <a data-action="nav#projects">
-                        <i class="fa fa-rocket"></i>Projects
+                        <i class="fa fa-paint-brush" aria-hidden="true"></i>Projects
                     </a>
                 </h3>
                 <p>

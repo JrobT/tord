@@ -1,5 +1,5 @@
-from django import template
 from website import settings
+from django import template
 
 register = template.Library()
 
