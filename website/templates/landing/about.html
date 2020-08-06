@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block main %}
+
+<!-- Splash -->
 <div class="splash-container" data-controller="nav">
     <div class="splash">
         <h1 class="splash-head">
@@ -11,7 +13,7 @@
             Software Developer and Data Scientist
         </p>
         <div class="pure-u-1">
-            <a data-action="nav#blog" class="splash-button">
+            <a data-action="nav#blog" class="button splash-button">
                 View Blog
             </a>
         </div>
@@ -21,8 +23,9 @@
     </div>
 </div>
 
+<!-- About content -->
 <div class="content-wrapper">
-    <div class="content is-center">
+    <div class="content">
         <h2 class="content-head" id="about">About</h2>
         <div class="pure-g" data-controller="nav">
             <div class="l-box pure-u-1-2">
@@ -47,13 +50,14 @@
             </div>
         </div>
     </div>
-    <div class="ribbon l-box-lrg pure-g is-center">
+    
+    <div class="ribbon l-box-lrg pure-g">
         <div class="pure-u-1">
             <h2 class="content-head content-head-ribbon">Keep in touch</h2>
         </div>
         <div class="pure-u-1 contact-section">
             <form method="POST">{% csrf_token %}
-                <input type="email" name="email"
+                <input type="email" name="email" autocomplete="off"
                     {% if form.email.errors %}
                     {% for error in form.email.errors %}
                     style="color: #fff;"
