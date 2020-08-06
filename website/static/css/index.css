@@ -1,15 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 :root {
-    --light-blue: #0490c8;
-    --blue: #0466C8;
-    --dark-blue: #023E7D;
-    --black-blue: #001233;
-    --blue-gray: #33415C;
-    --dark-gray: #353535;
-    --gray: #565656;
-    --light-gray: #979DAC;
-    --gradient-color: linear-gradient(100deg, var(--blue) 0%, var(--dark-blue) 36%, var(--black-blue) 100%);
-    --inverted-gradient-color: linear-gradient(90deg, var(--blue), var(--dark-blue), var(--black-blue), var(--blue));
-    --standard: "montserrat", sans-serif;
+    --dark: #61892F;
+    --light: #86C232;
+    --background: #222629;
+    --foreground: #474B4F;
+    --text: #6B6E70;
+    --gradient: linear-gradient(100deg, var(--light) 0%, #76a73c 36%, var(--dark) 100%);
+    --standard: "open sans", "montserrat", sans-serif;
     --statement: "consolas";
     --subtle: Georgia, "Cambria", serif
 }
@@ -23,9 +21,8 @@
 }
 
 body {
-    line-height: 1.7em;
-    color: var(--gray);
-    font-size: 13px
+    background: var(--background);
+    font-size: 12px
 }
 
 h1,
@@ -33,9 +30,9 @@ h2,
 h3,
 h4,
 h5,
-h6,
-label {
-    color: var(--blue-gray)
+h6 {
+    font-family: var(--statement);
+    color: white
 }
 
 .l-box {
@@ -47,11 +44,51 @@ label {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1)
 }
 
-.is-center {
-    text-align: center
+.sticky-header {
+    z-index: 1;
+    top: 0;
+    position: fixed;
+    width: 100%
 }
 
-.button {
+.bounce {
+    transform: translateX(0);
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out
+}
+
+.bounce:hover {
+    transform: translateX(10px);
+    -webkit-transition: 0.3s ease-in;
+    -moz-transition: 0.3s ease-in;
+    -ms-transition: 0.3s ease-in;
+    -o-transition: 0.3s ease-in;
+    transition: 0.3s ease-in
+}
+
+.scale {
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out
+}
+
+.scale:hover {
+    transform: scale(1.2);
+    -webkit-transition: 0.3s ease-in;
+    -moz-transition: 0.3s ease-in;
+    -ms-transition: 0.3s ease-in;
+    -o-transition: 0.3s ease-in;
+    transition: 0.3s ease-in
+}
+
+.button,
+.button-alt {
     cursor: pointer;
     font-family: var(--statement);
     text-transform: uppercase;
@@ -65,15 +102,31 @@ label {
     padding: 12px 20px;
     margin: 20px;
     border-radius: 8px;
-    background-image: black;
     background-size: 200%;
-    color: var(--blue);
+    -webkit-transition: 0.6s linear;
+    -moz-transition: 0.6s linear;
+    -ms-transition: 0.6s linear;
+    -o-transition: 0.6s linear;
     transition: 0.6s
 }
 
+.button {
+    background-image: var(--light);
+    color: var(--light)
+}
+
 .button:hover {
-    background: var(--blue);
-    color: black
+    background: var(--light);
+    color: white
+}
+
+.button-alt {
+    background-image: none;
+    color: white
+}
+
+.button-alt:hover {
+    background: none
 }
 
 .splash-container {
@@ -109,7 +162,7 @@ label {
 
 .splash-head-text {
     z-index: -1;
-    color: white;
+    color: var(--dark);
     background: black;
     font-size: 80px;
     font-weight: bold
@@ -124,7 +177,7 @@ label {
 
 .splash-head-gradient {
     z-index: -1;
-    background: var(--gradient-color);
+    background: var(--gradient);
     position: absolute;
     top: 0;
     left: 0;
@@ -141,7 +194,7 @@ label {
     right: 0;
     bottom: 0;
     mix-blend-mode: color-dodge;
-    animation: dodge-area 8s linear infinite
+    animation: dodge-area 12s linear infinite
 }
 
 @keyframes dodge-area {
@@ -151,51 +204,39 @@ label {
 }
 
 .splash-subhead {
-    color: white;
+    color: var(--text);
     letter-spacing: 0.05em;
     opacity: 0.8;
     margin: 0
 }
 
-.splash-button {
-    cursor: pointer;
-    font-family: var(--statement);
-    text-transform: uppercase;
-    text-decoration: none;
-    text-align: center;
-    letter-spacing: 4px;
-    background: none;
-    border: none;
-    position: relative;
-    display: inline-block;
-    padding: 12px 20px;
-    margin: 20px;
-    border-radius: 8px;
-    background-image: black;
-    background-size: 200%;
-    color: var(--blue);
-    transition: 0.6s
-}
-
 .splash-button:hover {
-    background: var(--blue);
-    color: black;
-    box-shadow: 0 0 5px var(--blue),
-                0 0 25px var(--blue),
-                0 0 50px var(--blue),
-                0 0 200px var(--blue);
+    box-shadow: 0 0 5px var(--light),
+                0 0 25px var(--light),
+                0 0 50px var(--light),
+                0 0 200px var(--light)
 }
 
 .page-down a {
     font-size: 40px;
-    color: white;
-    cursor: pointer
+    color: var(--foreground);
+    cursor: pointer;
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out;
 }
 
 .page-down a:hover i {
-    color: var(--blue);
+    color: var(--light);
     transform: scale(1.2);
-    transition: 0.2s ease-in;
+    -webkit-transition: 0.3s ease-in;
+    -moz-transition: 0.3s ease-in;
+    -ms-transition: 0.3s ease-in;
+    -o-transition: 0.3s ease-in;
+    transition: 0.3s ease-in;
     border-radius: 50%;
     background-clip: text;
     -webkit-background-clip: text
@@ -207,10 +248,12 @@ label {
     width: 100%;
     min-height: 12%;
     z-index: 2;
-    background: white
+    background: var(--light);
+    color: white
 }
 
 .content {
+    text-align: center;
     padding: 1em 1em 3em
 }
 
@@ -221,15 +264,8 @@ label {
     margin: 2em 0 1em
 }
 
-.content-head-ribbon {
-    color: white
-}
-
-.content-subhead {
-    color: var(--blue)
-}
-
 .content-subhead a {
+    color: black;
     cursor: pointer
 }
 
@@ -238,8 +274,8 @@ label {
 }
 
 .ribbon {
-    background: var(--dark-gray);
-    color: var(--light-gray)
+    background: var(--foreground);
+    text-align: center
 }
 
 .contact-section {
@@ -251,8 +287,8 @@ label {
     background: none;
     border: none;
     outline: none;
+    color: var(--text);
     border-bottom: 1px solid white;
-    color: white;
     padding: 10px 6px;
     font-size: 18px;
     margin-bottom: 20px;
@@ -264,30 +300,51 @@ label {
     font-size: 16px;
     color: white;
     cursor: pointer;
-    margin: 16px
+    margin: 16px;
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out
 }
 
 .socials a:hover i {
-    color: var(--blue);
+    color: white;
     transform: scale(2);
-    transition: 0.2s ease-in;
+    -webkit-transition: 0.3s ease-in;
+    -moz-transition: 0.3s ease-in;
+    -ms-transition: 0.3s ease-in;
+    -o-transition: 0.3s ease-in;
+    transition: 0.3s ease-in;
     background-clip: text;
     -webkit-background-clip: text
 }
 
-#layout {
-    padding: 0
+.socials a:hover i.fa-twitter {
+    color: #1DA1F2
+}
+
+.socials a:hover i.fa-github {
+    color: #333333
+}
+
+.socials a:hover i.fa-linkedin-in {
+    color: #2867B2
 }
 
 .sidebar {
-    background: var(--dark-gray);
-    color: var(--light-gray);
-    display: none
+    z-index: 1;
+    overflow: auto;
+    background: var(--light);
+    color: white;
+    max-width: 0;
+    transition: max-width 0.6s ease-out
 }
 
 .sidebar.filter-open {
-    display: block;
-    width: 25%
+    max-width: 500px;
+    transition: max-width 0.6s ease-in
 }
 
 .filter {
@@ -295,70 +352,99 @@ label {
     justify-content: space-between;
     text-align: center;
     top: auto;
-    margin: 3em auto
+    margin: 20% 3em auto
 }
 
-.filter-list {
-    margin: 0;
-    padding: 3em 0
+.filter-item {
+    height: 100px;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    transition: 0.3s linear
+}
+
+.filter-item.open {
+    height: auto
 }
 
 .filter-title {
     display: flex;
-    color: var(--light-gray);
     padding: 10px;
     cursor: pointer;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 24px;
     font-weight: 600;
     align-items: center;
     justify-content: space-between;
-    transition: 0.3s ease-in
-}
-
-.filter-title {
-    pointer-events: none;
-    opacity: 0
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out
 }
 
 .filter-title.open {
-    color: white
+    color: var(--dark);
+    -webkit-transition: 0.3s ease-in;
+    -moz-transition: 0.3s ease-in;
+    -ms-transition: 0.3s ease-in;
+    -o-transition: 0.3s ease-in;
+    transition: 0.3s ease-in
 }
 
 .filter-icon {
     position: relative;
     width: 14px;
-    transition: 0.5s linear
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out
 }
 
 .filter-icon.rotate {
-    transform: rotate(45deg)
+    transform: rotate(45deg);
+    -webkit-transition: 0.3s ease-in;
+    -moz-transition: 0.3s ease-in;
+    -ms-transition: 0.3s ease-in;
+    -o-transition: 0.3s ease-in;
+    transition: 0.3s ease-in
 }
 
 .filter-input {
     background: transparent;
-    border: 2px solid var(--light-gray);
-    color: white;
+    border: 2px solid var(--dark);
+    color: var(--dark);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     font-size: 85%;
     border-radius: 10%;
     padding: 8px;
     margin: 1em 0;
+    width: 220px;
     display: inline-block;
-    *display: inline;
-    transition: 0.3s ease-in;
-    opacity: 0
+    opacity: 0;
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out
 }
 
 .filter-input:hover {
-    border: 2px solid var(--blue);
+    border: 2px solid var(--dark);
     text-decoration: none
 }
 
 .filter-input.open {
-    opacity: 1
+    opacity: 1;
+    -webkit-transition: 0.3s ease-in;
+    -moz-transition: 0.3s ease-in;
+    -ms-transition: 0.3s ease-in;
+    -o-transition: 0.3s ease-in;
+    transition: 0.3s ease-in
 }
 
 .toggled {
@@ -368,8 +454,8 @@ label {
 
 .post-content-subhead {
     text-transform: uppercase;
-    color: var(--neutral);
-    border-bottom: 1px solid #eee;
+    color: var(--text);
+    border-bottom: 1px solid var(--text);
     padding: 0.4em 0;
     font-size: 80%;
     font-weight: 500;
@@ -377,37 +463,47 @@ label {
 }
 
 .post-content {
-    padding: 2em 1em 0
-}
-
-.post-content.filter-open {
-    margin-left: 25%
+    padding: 2em 6em 0
 }
 
 .post {
-    padding-bottom: 2em
+    cursor: pointer;
+    line-height: 2em;
+    padding-top: 2em;
+    padding-left: 0.6em;
+    border-radius: 4px;
+    -webkit-transition: 0.2s ease-out;
+    -moz-transition: 0.2s ease-out;
+    -ms-transition: 0.2s ease-out;
+    -o-transition: 0.2s ease-out;
+    transition: 0.2s ease-out
+}
+
+.post:hover {
+    opacity: 0.9;
+    background: var(--light);
+    -webkit-transition: 0.2s ease-in;
+    -moz-transition: 0.2s ease-in;
+    -ms-transition: 0.2s ease-in;
+    -o-transition: 0.2s ease-in;
+    transition: 0.2s ease-in
 }
 
 .post-title {
     font-size: 2em;
-    color: #222;
-    margin-bottom: 0.2em
-}
-
-.post-avatar {
-    border-radius: 50px;
-    float: right;
-    margin-left: 1em
+    color: white;
+    margin: 0
 }
 
 .post-description {
     font-family: var(--subtle);
-    color: var(--gray);
-    line-height: 1.8em
+    color: white;
+    line-height: 1.8em;
+    padding-bottom: 1em
 }
 
 .post-meta {
-    color: var(--light-gray);
+    color: var(--text);
     font-size: 90%;
     margin: 0
 }
@@ -416,10 +512,11 @@ label {
     text-decoration: none;
     margin: 0 0.1em;
     padding: 0.3em 1em;
-    color: white;
     cursor: pointer;
     font-size: 80%;
-    opacity: 0.8
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 5px white
 }
 
 .post-images {
@@ -435,7 +532,7 @@ label {
 
 .pagination {
     display: flex;
-    margin: 0;
+    margin: 1em;
     padding: 0;
     justify-content: center
 }
@@ -460,23 +557,33 @@ label {
     box-shadow: inset 
         0 5px 10px rgba(0, 0, 0, 0.1),
         0 2px 5px rgba(0, 0, 0, 0.5);
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out
 }
 
 .pagination li a:hover,
 .pagination li a.active {
-    color: white
+    color: var(--light)
 }
 
 .pagination li a:hover {
-    text-shadow: 0 0 20px white,
-    0 0 20px white,
-    0 0 20px white,
-    0 0 20px white,
-    0 0 20px white,
-    0 0 20px white,
-    0 0 20px white,
-    0 0 20px white,
-    0 0 20px white
+    -webkit-transition: 0.3s ease-in;
+    -moz-transition: 0.3s ease-in;
+    -ms-transition: 0.3s ease-in;
+    -o-transition: 0.3s ease-in;
+    transition: 0.3s ease-in;
+    text-shadow: 0 0 20px var(--light),
+    0 0 20px var(--light),
+    0 0 20px var(--light),
+    0 0 20px var(--light),
+    0 0 20px var(--light),
+    0 0 20px var(--light),
+    0 0 20px var(--light),
+    0 0 20px var(--light),
+    0 0 20px var(--light)
 }
 
 @media (min-width: 48em) {
@@ -497,11 +604,7 @@ label {
     }
 
     .post-content {
-        padding: 2em 3em 0
-    }
-
-    .filter {
-        margin: 20% 2em 0
+        padding: 2em 12em 0
     }
 
     .sidebar {
@@ -509,18 +612,42 @@ label {
         top: 0;
         bottom: 0
     }
-
-    .footer {
-        text-align: center
-    }
 }
 
-@media screen and (max-width: 38em) {
+@media screen and (max-width: 500px) {
     .contact-section input {
         width: 100%
     }
 
     .splash-head-text {
         font-size: 40px
+    }
+
+    .sidebar {
+        overflow: hidden;
+        max-width: 500px;
+        max-height: 0;
+        transition: max-height 0.6s ease-out
+    }
+
+    .sidebar.filter-open {
+        max-height: 500px;
+        transition: max-height 0.6s ease-in
+    }
+
+    #filter-open {
+        margin: 0
+    }
+
+    .filter {
+        margin: 0 3em auto
+    }
+
+    .filter-list {
+        margin: 0
+    }
+
+    .filter-item {
+        height: 50px
     }
 }
