@@ -1,37 +1,44 @@
 {% extends 'base.html' %}
 {% block title %}Blog &ndash; {{ blogname }}{% endblock title %}
 {% block main %}
-<div id="layout" class="pure-g">
-    <button class="button" id="filter-open" data-action="filter#menu">&#9776;</button>
+<div class="pure-g" data-controller="nav">
+    <!-- Header -->
+    <div class="sticky-header">
+        <button class="button" id="filter-open" data-action="nav#menu">&#9776;</button>
+    </div>
 
+    <!-- Sidebar -->
     <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <button class="button-alt scale" id="filter-close" data-action="nav#menu">Close &times;</button>
         <div class="filter" data-controller="filter">
             <div class="filter-list">
-                <button class="button" style="display: none;" id="filter-close" data-action="filter#menu">Close &times;</button>
                 <form method="GET">
                     <div class="filter-item">
-                        <a class="filter-title" data-action="filter#expand">
+                        <a class="filter-title bounce" data-action="filter#expand">
                             Text
                             <div class="filter-icon">&#43;</div>
                         </a>
                         <input class="filter-input" type="text" name="text"
                             placeholder="Filter by text" disabled>
                     </div>
+
                     {% if archive.items %}
                     <div class="filter-item">
-                        <a class="filter-title" data-action="filter#expand">
+                        <a class="filter-title bounce" data-action="filter#expand">
                             Archive
                             <div class="filter-icon">&#43;</div>
                         </a>
-                        <select class="filter-input" name="archive">
+                        <select class="filter-input" name="archive" disabled>
                             <option selected disabled value>Pick date</option>
                             {% for date, count in archive.items %}
                                 <option value="{{ date }}">{{ date }} ({{ count }})</option>
                             {% endfor %}
                         </select>
                     </div>
+                    {% endif %}
+                    
                     <div class="filter-item">
-                        <a class="filter-title" data-action="filter#expand">
+                        <a class="filter-title bounce" data-action="filter#expand">
                             Tags
                             <div class="filter-icon">&#43;</div>
                         </a>
@@ -39,15 +46,11 @@
                             <button style="background: {{ tag.background }}" class="filter-input" 
                                 type="button" data-action="filter#tag">{{ tag.title }} ({{ count }})</button>
                             <input type="hidden" id="{{ tag.title }}" name="tag"
-                                value="{{ tag.title }}" disabled>
+                                value="{{ tag.title }}">
                         {% endfor %}
                     </div>
-                    {% endif %}
 
-                    <div class="pure-u-1" data-controller="nav">
-                        <button class="button" data-action="nav#blog">Clear</button> &#47;
-                        <button class="button" type="submit">Filter</button>
-                    </div>
+                    <button class="button-alt scale" type="submit">Filter</button>
                 </form>
             </div>
         </div>
