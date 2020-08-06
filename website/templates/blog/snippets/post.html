@@ -2,20 +2,14 @@
 <section class="post" id="{{ post.slug }}" data-action="click->post#detail">
     <header class="post-header">
         <h2 class="post-title">{{ post.title|title }}</h2>
-        {% ifnotequal post.posted post.edited %}
         <p class="post-meta">
-            {{ post.posted|date:"d F Y" }}, edit made on {{ post.edited|date:"d F Y" }}
+            {{ post.posted|date:"d F Y" }}{% ifnotequal post.posted post.edited %}, edit made on {{ post.edited|date:"d F Y" }}{% endifnotequal %}
         </p>
-        {% else %}
-        <p class="post-meta">
-            {{ post.posted|date:"d F Y" }}
-        </p>
-        {% endifnotequal %}
         {% for tag in post.tags.all %}
         <a class="post-category" style="background: {{ tag.background }}" href="{{ tag.slug }}">{{ tag.title|title }}</a>
         {% endfor %}
     </header>
     <div class="post-description">
-        <p>{{ post.tagline|truncatewords:50 }}</p>
+        <p>{{ post.tagline|truncatewords:30 }}</p>
     </div>
 </section>

@@ -55,7 +55,7 @@
         <div class="pure-u-1">
             <h2 class="content-head content-head-ribbon">Keep in touch</h2>
         </div>
-        <div class="pure-u-1 contact-section">
+        <div class="pure-u-1 form">
             <form method="POST">{% csrf_token %}
                 <input type="email" name="email" autocomplete="off"
                     {% if form.email.errors %}

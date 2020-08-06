@@ -278,12 +278,13 @@ h6 {
     text-align: center
 }
 
-.contact-section {
+.form {
     padding: 30px 0;
     text-align: center
 }
 
-.contact-section input {
+.form input,
+.form textarea {
     background: none;
     border: none;
     outline: none;
@@ -542,6 +543,7 @@ h6 {
 }
 
 .pagination li a {
+    cursor: pointer;
     position: relative;
     display: block;
     width: 36px;
@@ -566,6 +568,11 @@ h6 {
 
 .pagination li a:hover,
 .pagination li a.active {
+    -webkit-transition: 0.3s ease-in;
+    -moz-transition: 0.3s ease-in;
+    -ms-transition: 0.3s ease-in;
+    -o-transition: 0.3s ease-in;
+    transition: 0.3s ease-in;
     color: var(--light)
 }
 
@@ -584,6 +591,140 @@ h6 {
     0 0 20px var(--light),
     0 0 20px var(--light),
     0 0 20px var(--light)
+}
+
+.post-view header {
+    padding: 6%;
+    text-align: center;
+    background: var(--light);
+    color: white
+}
+
+.post-view header h1 {
+    font-size: 3em
+}
+
+.post-view .post-view-meta {
+    opacity: 0.9;
+    color: white;
+    background: black;
+    text-align: center
+}
+
+.post-view .post-view-meta .tagline {
+    color: var(--text)
+}
+
+.post-view .body {
+    width: 100%;
+    padding: 5% 12% 5% 12%;
+    text-align: left;
+    color: var(--text);
+    letter-spacing: 3px;
+    border-bottom: 1px solid var(--text)
+}
+
+.post-view .comments {
+    padding: 3% 15% 0 15%;
+    text-align: left;
+    color: var(--text);
+    font-size: 80%;
+    letter-spacing: 2px
+}
+
+.post-view .comments a {
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out;
+    padding-left: 3%;
+    cursor: pointer
+}
+
+.post-view .comments a.open,
+.post-view .comments a:hover {
+    -webkit-transition: 0.3s ease-in;
+    -moz-transition: 0.3s ease-in;
+    -ms-transition: 0.3s ease-in;
+    -o-transition: 0.3s ease-in;
+    transition: 0.3s ease-in;
+    color: var(--light)
+}
+
+.post-view .comments a.open i {
+    transform: rotate(90deg)
+}
+
+.post-view .comments p span {
+    color: white
+}
+
+.post-view .comments .replies {
+    padding-left: 5%;
+    overflow: hidden;
+    opacity: 0;
+    max-height: 0;
+    transition: 0.6s ease-in-out
+}
+
+.post-view .comments .replies.open {
+    opacity: 1;
+    max-height: 500px
+}
+
+.post-view .comment-form {
+    padding: 3% 0 0 0
+}
+
+.post-view .comment-form input,
+.post-view .comment-form textarea {
+    margin: 0 10px 10px 10px;
+    padding: 0;
+    width: 800px;
+    background: var(--text);
+    color: var(--foreground)
+}
+
+.post-view .comment-form textarea {
+    height: 100px;
+    text-align: left
+}
+
+.post-view form {
+    width: 100%;
+    height: 100%;
+    text-align: center
+}
+
+.post-view form header h1 input {
+    background: none;
+    border: none;
+    outline: none;
+    text-align: center
+}
+
+.post-view form .post-view-meta .tagline textarea {
+    width: 1200px;
+    height: 100px;
+    background: var(--text);
+    border: none;
+    outline: none;
+    color: white
+}
+
+.post-view form .body {
+    border: none;
+    padding-bottom: 0
+}
+
+#id_body {
+    width: 100%;
+    height: 100%;
+    background: var(--text);
+    border: none;
+    outline: none;
+    color: white
 }
 
 @media (min-width: 48em) {
@@ -615,7 +756,7 @@ h6 {
 }
 
 @media screen and (max-width: 500px) {
-    .contact-section input {
+    .form input {
         width: 100%
     }
 
@@ -649,5 +790,10 @@ h6 {
 
     .filter-item {
         height: 50px
+    }
+
+    .post-view .comment-form input,
+    .post-view .comment-form textarea {
+        width: 300px
     }
 }

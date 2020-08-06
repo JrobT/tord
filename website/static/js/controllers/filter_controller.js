@@ -1,11 +1,6 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-    initialize() {
-        var tags = $("input:checkbox");
-        console.log(tags);
-    }
-
     expand(event) {
         var target = $(event.target);
         var item = target.parent();

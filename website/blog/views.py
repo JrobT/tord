@@ -11,10 +11,10 @@ from blog.forms import CommentForm
 from blog.mixins import MailingListMixin
 
 
-def post_detail(request, slug):
-    template_name = "blog/post_detail.html"
+def post_view(request, slug):
+    template_name = "blog/post_view.html"
     post = get_object_or_404(Post, slug=slug)
-    comments = post.comments.filter(active=True)
+    comments = post.comments.filter(Q(active=True) & Q(parent__isnull=True))
     new_comment = None
 
     if request.method == "POST":
