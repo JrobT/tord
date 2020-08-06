@@ -74,6 +74,14 @@ class PostListView(MailingListMixin, TemplateView):
             )
         }
 
+        text_filter = request.GET.get("text")
+        if text_filter is not None or "":
+            qs = qs.filter(
+                Q(title__icontains=text_filter)
+                | Q(tagline__icontains=text_filter)
+                | Q(body__icontains=text_filter)
+            )
+
         archive_filter = request.GET.get("archive")
         if archive_filter is not None or "":
             dt = datetime.strptime(archive_filter, "%B %Y")
@@ -82,14 +90,6 @@ class PostListView(MailingListMixin, TemplateView):
         tag_filter = request.GET.get("tag")
         if tag_filter is not None or "":
             qs = qs.filter(tags__title__icontains=tag_filter)
-
-        text_filter = request.GET.get("text")
-        if text_filter is not None or "":
-            qs = qs.filter(
-                Q(title__icontains=text_filter)
-                | Q(tagline__icontains=text_filter)
-                | Q(body__icontains=text_filter)
-            )
 
         paginator = Paginator(qs, 10)
         page_number = request.GET.get("page")
