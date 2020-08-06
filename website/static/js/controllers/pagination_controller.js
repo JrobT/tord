@@ -2,13 +2,18 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
     initialize() {
-        var param = getUrlParam('page', 'Empty');
+        var param = getUrlParam("page", "Empty");
+        if (param == "Empty") {
+            param = 1
+            document.location.search = "?page=" + param + "&" + document.location.search.substr(1);
+        }
         $('.pagination li a').removeClass('active')
         $('#page-' + param).addClass('active')
     }
 
     page(event) {
-        Turbolinks.visit('/blog/?page=' + event.target.id.replace('page-', ''))
+        var params = document.location.search.replace("?page=", "").substr(1);
+        Turbolinks.visit('/blog/?page=' + event.target.id.replace('page-', '') + params)
     }
 }
 
