@@ -27,11 +27,11 @@ def test_create_status(client, create_user, user_username, user_email, user_pass
     "post_title,post_tagline,post_body",
     [("test", "Here is a tagline", "# Here is a body title")],
 )
-def test_detail_status(
+def test_view_status(
     client, create_tag, create_post, tag_title, post_title, post_tagline, post_body
 ):
     post = create_post(post_title, post_tagline, post_body)
-    response = client.get(reverse("post-detail", args=[post.slug]))
+    response = client.get(reverse("post-view", args=[post.slug]))
     assert response.status_code == 200, "Should be status code 200"
 
 

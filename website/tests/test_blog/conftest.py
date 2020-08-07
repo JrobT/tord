@@ -4,7 +4,7 @@ import pytest
 from os import getenv
 from django.conf import settings
 from django.contrib.auth.models import User
-from blog.models import Tag, Post, Comment
+from blog.models import Post, Comment, Tag, Email
 
 
 def pytest_configure():
@@ -26,23 +26,22 @@ def django_db_setup():
 
 
 @pytest.fixture
-def create_tag():
+def create_user():
 
-    created_tags = []
+    created_users = []
 
-    def _make_create_tag(title, background, post=None):
-        if post is None:
-            tag = Tag(title=title, background=background)
-        else:
-            tag = Tag(title=title, background=background, post=post)
-        tag.save()
-        created_tags.append(tag)
-        return tag
+    def _make_create_user(username, email, password):
+        user = User.objects.create_superuser(
+            username=username, email=email, password=password
+        )
+        user.save()
+        created_users.append(user)
+        return user
 
-    yield _make_create_tag
+    yield _make_create_user
 
-    for tag in created_tags:
-        tag.delete()
+    for user in created_users:
+        user.delete()
 
 
 @pytest.fixture
@@ -83,19 +82,37 @@ def create_comment():
 
 
 @pytest.fixture
-def create_user():
+def create_tag():
 
-    created_users = []
+    created_tags = []
 
-    def _make_create_user(username, email, password):
-        user = User.objects.create_superuser(
-            username=username, email=email, password=password
-        )
-        user.save()
-        created_users.append(user)
-        return user
+    def _make_create_tag(title, background, post=None):
+        if post is None:
+            tag = Tag(title=title, background=background)
+        else:
+            tag = Tag(title=title, background=background, post=post)
+        tag.save()
+        created_tags.append(tag)
+        return tag
 
-    yield _make_create_user
+    yield _make_create_tag
 
-    for user in created_users:
-        user.delete()
+    for tag in created_tags:
+        tag.delete()
+
+
+@pytest.fixture
+def create_email():
+
+    created_emails = []
+
+    def _make_create_email(email):
+        email = Email(email=email)
+        email.save()
+        created_emails.append(email)
+        return email
+
+    yield _make_create_email
+
+    for email in created_emails:
+        email.delete()

@@ -18,7 +18,7 @@ def test_create_post(create_post, tag_title, post_title, post_tagline, post_body
         Post.objects.filter(pk=post.pk).count() == 1
     ), "There should be a Post created"
     assert str(post) == post_title, "__str__ should be equal to title"
-    assert slugify(post.title) == post.slug, "The Post's slug field needs to be set"
+    assert slugify(post.title) in post.slug, "The Post's slug field needs to be set"
 
 
 @pytest.mark.django_db
@@ -71,14 +71,14 @@ def test_create_pinned_post(
         Post.objects.filter(pk=post1.pk).count() == 1
     ), "There should be a Post created"
     assert str(post1) == post_title1, "__str__ should be equal to title"
-    assert slugify(post1.title) == post1.slug, "The Post's slug field needs to be set"
+    assert slugify(post1.title) in post1.slug, "The Post's slug field needs to be set"
 
     post2 = create_post(post_title2, post_tagline, post_body)
     assert (
         Post.objects.filter(pk=post2.pk).count() == 1
     ), "There should be a Post created"
     assert str(post2) == post_title2, "__str__ should be equal to title"
-    assert slugify(post2.title) == post2.slug, "The Post's slug field needs to be set"
+    assert slugify(post2.title) in post2.slug, "The Post's slug field needs to be set"
 
     # Test 'pinned' status is unique.
     assert Post.objects.filter(pinned=True).count() == 0
@@ -100,7 +100,7 @@ def test_create_tag(create_tag, tag_title, tag_background):
     assert Tag.objects.filter(pk=tag.pk).count() == 1, "There should be a Tag created"
     assert str(tag) == tag_title, "__str__ should be equal to title"
     assert (
-        slugify(tag.title) == tag.slug
+        slugify(tag.title) in tag.slug
     ), "The Tag's slug field needs to be set correctly"
     assert (
         tag.background == tag_background
@@ -132,7 +132,7 @@ def test_create_comment(
         Post.objects.filter(pk=post.pk).count() == 1
     ), "There should be a Post created"
     assert str(post) == post_title, "__str__ should be equal to title"
-    assert slugify(post.title) == post.slug, "The Post's slug field needs to be set"
+    assert slugify(post.title) in post.slug, "The Post's slug field needs to be set"
 
     # Create a Comment and attach Post object.
     comment = create_comment(comment_name, comment_email, comment_comment, post=post)
