@@ -1,5 +1,6 @@
 from django.contrib import admin
 from blog.models import Post, Comment, Tag, Email
+from blog.forms import CommentForm
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -8,10 +9,11 @@ class PostAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ("name", "comment", "post", "created", "active")
+    form = CommentForm
+    list_display = ("name", "comment", "post", "created", "active", "parent")
     list_filter = ("created", "active")
     search_fields = ("name", "email", "comment")
-    actions = ['approve_comments']
+    actions = ["approve_comments"]
 
     def approve_comments(self, request, queryset):
         queryset.update(active=True)
@@ -22,9 +24,15 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class EmailAdmin(admin.ModelAdmin):
-    list_display = ("email", "subbed",)
+    list_display = (
+        "email",
+        "subbed",
+    )
     list_filter = ("subbed",)
-    search_fields = ("email", "subbed",)
+    search_fields = (
+        "email",
+        "subbed",
+    )
 
 
 admin.site.register(Post, PostAdmin)

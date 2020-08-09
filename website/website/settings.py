@@ -77,43 +77,57 @@ TEMPLATES = [
 
 DATABASES = {
     "default": {
-        "ENGINE": getenv("DATABASE_ENGINE", "django.db.backends.postgresql_psycopg2"),
-        "NAME": getenv("DATABASE_NAME", "truteordare"),
-        "USER": getenv("DATABASE_USERNAME", "truteordare"),
-        "PASSWORD": getenv("DATABASE_PASSWORD", "truteordare"),
-        "HOST": getenv("DATABASE_HOST", "127.0.0.1"),
-        "PORT": getenv("DATABASE_PORT", "5432"),
-        "OPTIONS": json.loads(getenv("DATABASE_OPTIONS", "{}")),
+        "ENGINE": getenv("DATABASE_ENGINE"),
+        "NAME": getenv("POSTGRES_DB"),
+        "USER": getenv("POSTGRES_USER"),
+        "PASSWORD": getenv("POSTGRES_PASSWORD"),
+        "HOST": getenv("DATABASE_HOST"),
+        "PORT": getenv("DATABASE_PORT")
     }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 # Internalisation
-LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
+LANGUAGE_CODE = "en"
+TIME_ZONE = "Europe/London"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
 # Assets
-STATIC_URL = "http://127.0.0.1:8080/"
-STATICFILES_DIRS = ['dist']
+STATIC_URL = "/static/"
+STATICFILES_DIRS = (
+    join(PROJECT_DIR, 'static'),
+)
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'dist/',
+        'STATS_FILE': join(PROJECT_DIR,
+                           'static/dist/webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
+        'LOADER_CLASS': 'webpack_loader.loader.WebpackLoader',
+    }
+}
 
 # Web Apps
 PACKAGE_APPS = [
+    "webpack_loader",
     "markdownx",
     "profanity"
 ]
 
 WEB_APPS = [
+    "landing",
     "blog"
 ]
 

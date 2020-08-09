@@ -7,17 +7,16 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0002_auto_20200301_1755'),
+        ("blog", "0002_auto_20200301_1755"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='category',
-            options={'verbose_name_plural': 'categories'},
+            name="category", options={"verbose_name_plural": "categories"},
         ),
         migrations.AddField(
-            model_name='post',
-            name='tagline',
+            model_name="post",
+            name="tagline",
             field=models.TextField(default=django.utils.timezone.now),
             preserve_default=False,
         ),
