@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+{% block title %}{{ post.title|title|truncatechars:10 }} &ndash; {{ blogname }}{% endblock title %}
+{% block main %}
+<div class="post-view pure-g" data-controller="post">
+  <!-- Header -->
+  <div class="sticky-header">
+  </div>
+
+  <!-- Heading -->
+  <header class="pure-u-1">
+      <h1>{{ post.title|title }}</h1>
+      {% if user.is_authenticated %}
+      <div>
+        <a style="margin: 0" class="button-alt scale" id="{{ post.pk }}" data-action="post#edit">Edit</a>
+      </div>
+      {% endif %}
+  </header>
+
+  <!-- Meta Content -->
+  <div class="post-view-meta pure-u-1">
+      <p>
+        {{ post.posted }}{% ifnotequal post.posted post.edited %}, edit made on {{ post.edited|date:"d F Y" }}{% endifnotequal %}
+        &#47; {{ comments.count }} Comment{% ifnotequal comments.count 1 %}s{% endifnotequal %}</span>
+      </p>
+      <p class="tagline">
+        {{ post.tagline|truncatewords:50 }}
+      </p>
+  </div>
+
+  <!-- Content -->
+  <div class="body">
+    {{ post.body|markdown|safe }}
+  </div>
+
+  <!-- Comments -->
+  {% autoescape on %}
+  {% if comments %}
+  <div class="comments">
+  {% for comment in comments %}
+    <p><span>{{ comment.name }}</span> on {{ comment.created }}</p>
+    {{ comment.comment|linebreaks }}
+    {% if comment.replies.all %}
+    <div>
+      <a data-action="post#expand">See replies <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+      <div class="replies">
+      {% for reply in comment.replies.all %}
+        <p><span>{{ reply.name }}</span> on {{ reply.created }}</p>
+        {{ reply.comment|linebreaks }}
+      {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  {% endfor %}
+  </div>
+  {% endif %}
+  {% endautoescape off %}
+
+  <!-- New Comments -->
+  <div class="pure-u-1 form comment-form">
+    <form method="POST">{% csrf_token %}
+      <div>
+        <input type="text" name="name" autocomplete="off" placeholder="Your name" required><br>
+        <input type="email" name="email" autocomplete="off" placeholder="Your email" required>
+        <input type="hidden" name="post" value="{{ post.pk }}">
+      </div>
+      <div>
+        {{ comment_form.comment }}
+      </div>
+      <button type="submit" class="button">Post</button>
+    </form>
+  </div>
+</div>
+{% endblock main %}

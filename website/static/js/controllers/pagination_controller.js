@@ -2,16 +2,33 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
     initialize() {
-        var url = window.location.search
-        $('div.pagination>ul>.pagination__bubble').removeClass('active')
-        $('#' + url.replace('?page=', '')).addClass('active')
+        var param = getUrlParam("page", "Empty");
+        if (param == "Empty") {
+            param = 1
+            document.location.search = "?page=" + param + "&" + document.location.search.substr(1);
+        }
+        $('.pagination li a').removeClass('active')
+        $('#page-' + param).addClass('active')
     }
 
-    bubble(event) {
-        Turbolinks.visit('/?page=' + event.target.id)
+    page(event) {
+        var params = document.location.search.replace("?page=", "").substr(1);
+        Turbolinks.visit('/blog/?page=' + event.target.id.replace('page-', '') + params)
     }
+}
 
-    first() {
-        Turbolinks.visit('/?page=1')
+function getUrlVars() {
+    var vars = {};
+    window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+function getUrlParam(parameter, defaultvalue) {
+    var urlparameter = defaultvalue;
+    if (window.location.href.indexOf(parameter) > -1) {
+        urlparameter = getUrlVars()[parameter];
     }
+    return urlparameter;
 }

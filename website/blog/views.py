@@ -11,10 +11,10 @@ from blog.forms import CommentForm
 from blog.mixins import MailingListMixin
 
 
-def post_detail(request, slug):
-    template_name = "blog/post_detail.html"
+def post_view(request, slug):
+    template_name = "blog/post_view.html"
     post = get_object_or_404(Post, slug=slug)
-    comments = post.comments.filter(active=True)
+    comments = post.comments.filter(Q(active=True) & Q(parent__isnull=True))
     new_comment = None
 
     if request.method == "POST":
@@ -74,6 +74,14 @@ class PostListView(MailingListMixin, TemplateView):
             )
         }
 
+        text_filter = request.GET.get("text")
+        if text_filter is not None or "":
+            qs = qs.filter(
+                Q(title__icontains=text_filter)
+                | Q(tagline__icontains=text_filter)
+                | Q(body__icontains=text_filter)
+            )
+
         archive_filter = request.GET.get("archive")
         if archive_filter is not None or "":
             dt = datetime.strptime(archive_filter, "%B %Y")
@@ -83,14 +91,6 @@ class PostListView(MailingListMixin, TemplateView):
         if tag_filter is not None or "":
             qs = qs.filter(tags__title__icontains=tag_filter)
 
-        text_filter = request.GET.get("text")
-        if text_filter is not None or "":
-            qs = qs.filter(
-                Q(title__icontains=text_filter)
-                | Q(tagline__icontains=text_filter)
-                | Q(body__icontains=text_filter)
-            )
-
         paginator = Paginator(qs, 10)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
@@ -98,6 +98,7 @@ class PostListView(MailingListMixin, TemplateView):
         context = {
             "pinned": pinned,
             "page_obj": page_obj,
+            "num_pages": range(1, page_obj.paginator.num_pages+1),
             "comments": Comment.objects.filter(active=True),
             "archive": archive,
             "tags": sortedTags,

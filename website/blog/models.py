@@ -53,12 +53,14 @@ class Comment(models.Model):
     comment = models.TextField(max_length=500, validators=[validate_is_profane])
     created = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=False)
+    parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE,
+        related_name='replies')
 
     class Meta:
         ordering = ["created"]
 
     def __str__(self):
-        return "Comment {} by {}".format(self.comment, self.name)
+        return "Comment {} by {}".format(self.comment[0:30], self.name)
 
 
 class Tag(models.Model):
